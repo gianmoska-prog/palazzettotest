@@ -3187,3 +3187,136 @@ body {
     object-position: 56% center;
   }
 }
+
+/* v20: creative-direction cohesion pass */
+.page-hero {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(9, 16, 22, 0.2) 0%,
+      rgba(9, 16, 22, 0.38) 52%,
+      rgba(9, 16, 22, 0.82) 100%
+    ),
+    var(--page-image, url("../img/hero-lago-cielo.webp")) center / cover no-repeat;
+}
+.page[data-page="dimora"] .page-hero {
+  background-position: center, center 54%;
+}
+.page[data-page="camere"] .page-hero {
+  background-position: center, 51% center;
+}
+.page[data-page="servizi"] .page-hero {
+  background-position: center, 42% center;
+}
+.image-card figure,
+.carousel-stage,
+.mood-strip figure {
+  border: 1px solid rgba(23, 32, 42, 0.1);
+}
+.image-card figure {
+  box-shadow: 0 22px 54px rgba(23, 32, 42, 0.08);
+}
+.note,
+.event-flow,
+.stats {
+  border-color: rgba(23, 32, 42, 0.1);
+}
+.footer-minimal__inner {
+  min-height: 58px;
+}
+.footer-wordmark {
+  display: grid;
+  gap: 5px;
+  min-width: max-content;
+  color: var(--ivory);
+}
+.footer-wordmark strong {
+  font-family: var(--serif);
+  font-size: 1.08rem;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.08em;
+}
+.footer-wordmark span {
+  color: rgba(244, 234, 220, 0.58);
+  font-size: 0.57rem;
+  letter-spacing: 0.22em;
+}
+.footer-contact {
+  margin-left: auto;
+  line-height: 1.7;
+  text-align: right;
+}
+.footer-contact a {
+  white-space: nowrap;
+}
+
+@media (max-width: 900px) {
+  .footer-minimal__inner {
+    grid-template-columns: 1fr auto;
+    align-items: end;
+  }
+  .footer-wordmark {
+    grid-column: 1 / -1;
+  }
+  .footer-contact {
+    margin-left: 0;
+    text-align: left;
+  }
+}
+
+@media (max-width: 760px) {
+  .page[data-page="dimora"] .page-hero {
+    background-position: center, 50% center;
+  }
+  .page[data-page="camere"] .page-hero {
+    background-position: center, 54% center;
+  }
+  .page[data-page="servizi"] .page-hero {
+    background-position: center, 38% center;
+  }
+  .stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .stat {
+    min-height: 180px;
+    padding: 22px 18px;
+  }
+  .stat strong {
+    margin-bottom: 18px;
+    font-size: clamp(2.2rem, 12vw, 3.35rem);
+  }
+  .stat span {
+    font-size: 0.82rem;
+    line-height: 1.5;
+  }
+  .image-card {
+    gap: 16px;
+  }
+  .note {
+    padding: 24px 22px;
+  }
+  .footer-minimal {
+    padding: 30px 20px;
+  }
+  .footer-minimal__inner {
+    grid-template-columns: 1fr;
+    gap: 18px;
+    align-items: start;
+  }
+  .footer-wordmark,
+  .footer-contact,
+  .footer-links {
+    grid-column: auto;
+  }
+  .footer-links {
+    justify-content: flex-start;
+  }
+}
+
+@media (hover: none) {
+  .image-card:hover img,
+  .mood-strip figure:hover img {
+    transform: none;
+  }
+}
