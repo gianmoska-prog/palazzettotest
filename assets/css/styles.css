@@ -3320,3 +3320,205 @@ body {
     transform: none;
   }
 }
+
+/* v21: room hierarchy and checklist content */
+.room-directory {
+  margin-top: clamp(54px, 7vw, 92px);
+  display: grid;
+  gap: clamp(72px, 9vw, 124px);
+}
+.room-showcase {
+  display: grid;
+  grid-template-columns: minmax(300px, 0.72fr) minmax(0, 1.28fr);
+  gap: clamp(32px, 5vw, 72px);
+  align-items: center;
+}
+.room-showcase--reverse .room-showcase__copy {
+  order: 2;
+}
+.room-showcase--reverse .room-gallery {
+  order: 1;
+}
+.room-showcase__copy h3 {
+  max-width: 660px;
+  margin: 0;
+  color: var(--blue-900);
+  font-size: clamp(2.3rem, 4.3vw, 4.8rem);
+  line-height: 0.96;
+}
+.room-showcase__copy > p:not(.kicker) {
+  max-width: 620px;
+  margin: 24px 0 0;
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1.75;
+}
+.room-facts {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  margin: 30px 0 0;
+  padding: 1px;
+  background: rgba(23, 32, 42, 0.11);
+}
+.room-facts div {
+  padding: 18px;
+  background: var(--ivory);
+}
+.room-facts dt {
+  color: var(--terracotta);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.room-facts dd {
+  margin: 8px 0 0;
+  font-family: var(--serif);
+  font-size: 1.25rem;
+  color: var(--wine);
+}
+.amenity-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 24px;
+}
+.amenity-list span {
+  padding: 9px 11px;
+  border: 1px solid rgba(23, 32, 42, 0.13);
+  color: rgba(23, 32, 42, 0.72);
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+}
+.room-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+.room-gallery figure {
+  min-width: 0;
+  margin: 0;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: var(--blue-900);
+  border: 1px solid rgba(23, 32, 42, 0.1);
+}
+.room-gallery__main {
+  grid-column: 1 / -1;
+  aspect-ratio: 16 / 10 !important;
+}
+.room-gallery img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  filter: saturate(0.9) contrast(1.02);
+}
+.stay-note {
+  margin-top: clamp(64px, 8vw, 110px);
+  padding: clamp(28px, 4vw, 52px);
+  display: grid;
+  grid-template-columns: minmax(240px, 0.8fr) minmax(260px, 1.2fr);
+  gap: 34px;
+  align-items: end;
+  color: var(--ivory);
+  background: var(--blue-950);
+}
+.stay-note h3 {
+  margin: 0;
+  font-size: clamp(2rem, 3.4vw, 3.8rem);
+  line-height: 0.98;
+}
+.stay-note p:last-child {
+  margin: 0;
+  color: rgba(244, 234, 220, 0.72);
+  line-height: 1.75;
+}
+.provisional-note {
+  margin-top: 16px;
+  display: flex;
+  gap: 14px 24px;
+  padding: 18px 20px;
+  border: 1px solid rgba(23, 32, 42, 0.1);
+  color: var(--muted);
+  font-size: 0.78rem;
+  line-height: 1.6;
+}
+.provisional-note strong {
+  flex: 0 0 auto;
+  color: var(--wine);
+}
+.service-notice {
+  margin-top: 18px;
+  padding: 24px 28px;
+  display: grid;
+  grid-template-columns: minmax(220px, 0.65fr) minmax(260px, 1.35fr);
+  gap: 28px;
+  border-left: 3px solid var(--roman-gold);
+  background: rgba(223, 229, 216, 0.48);
+}
+.service-notice strong {
+  font-family: var(--serif);
+  font-size: 1.45rem;
+  line-height: 1.15;
+  color: var(--blue-900);
+}
+.service-notice p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+@media (max-width: 1000px) {
+  .room-showcase {
+    grid-template-columns: 1fr;
+  }
+  .room-showcase--reverse .room-showcase__copy,
+  .room-showcase--reverse .room-gallery {
+    order: initial;
+  }
+}
+
+@media (max-width: 760px) {
+  .room-directory {
+    margin-top: 48px;
+    gap: 72px;
+  }
+  .room-showcase {
+    gap: 28px;
+  }
+  .room-showcase__copy h3 {
+    font-size: clamp(2.2rem, 11vw, 3.2rem);
+  }
+  .room-facts {
+    grid-template-columns: 1fr;
+  }
+  .room-facts div {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 18px;
+  }
+  .room-facts dd {
+    margin: 0;
+    text-align: right;
+  }
+  .room-gallery {
+    gap: 7px;
+  }
+  .room-gallery__main {
+    aspect-ratio: 4 / 3 !important;
+  }
+  .room-gallery figure:not(.room-gallery__main) {
+    aspect-ratio: 1 / 1;
+  }
+  .stay-note,
+  .service-notice {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+  .provisional-note {
+    display: grid;
+  }
+}
