@@ -59,11 +59,17 @@
         <a class="nav-link" href="#contatti" data-page-link="contatti">Contatti</a>
       </nav>
       <a class="header-enquire" href="#richiesta" data-page-link="contatti">Richiedi disponibilità</a>
-      <div class="language-switcher language-switcher--desktop">
-        <button class="lang-toggle" type="button" aria-label="Lingua italiana; altre traduzioni in preparazione" title="Inglese, francese, spagnolo e tedesco in preparazione" disabled>
-          <span class="lang-code">IT</span><span class="lang-flag flag-icon flag-it" aria-hidden="true"></span>
+      <div class="language-switcher language-switcher--desktop" data-language-switcher>
+        <button class="lang-toggle" type="button" aria-label="Seleziona lingua" aria-expanded="false" data-lang-toggle>
+          <span class="lang-code" data-current-lang-code>IT</span><span class="lang-flag flag-icon flag-it" data-current-lang-flag aria-hidden="true"></span>
         </button>
-        <span class="language-pending">EN · FR · ES · DE presto</span>
+        <div class="lang-menu" role="menu" data-lang-menu>
+          <button type="button" role="menuitemradio" aria-checked="true" data-lang-option="it"><span>IT</span><span class="lang-flag flag-icon flag-it" aria-hidden="true"></span><em>Italiano</em></button>
+          <button type="button" role="menuitemradio" aria-checked="false" data-lang-option="en"><span>EN</span><span class="lang-flag flag-icon flag-gb" aria-hidden="true"></span><em>English</em></button>
+          <button type="button" role="menuitemradio" aria-checked="false" data-lang-option="fr"><span>FR</span><span class="lang-flag flag-icon flag-fr" aria-hidden="true"></span><em>Français</em></button>
+          <button type="button" role="menuitemradio" aria-checked="false" data-lang-option="es"><span>ES</span><span class="lang-flag flag-icon flag-es" aria-hidden="true"></span><em>Español</em></button>
+          <button type="button" role="menuitemradio" aria-checked="false" data-lang-option="de"><span>DE</span><span class="lang-flag flag-icon flag-de" aria-hidden="true"></span><em>Deutsch</em></button>
+        </div>
       </div>
       <button class="menu-toggle" type="button" aria-label="Apri menu" aria-expanded="false" data-menu-toggle><span></span><span></span></button>
     </header>
@@ -76,10 +82,21 @@
         <a href="#servizi" data-page-link="servizi"><small>04</small>Servizi</a>
         <a href="#contatti" data-page-link="contatti"><small>05</small>Contatti</a>
       </nav>
+      <div class="language-switcher mobile-language" data-language-switcher>
+        <button class="lang-toggle" type="button" aria-label="Seleziona lingua" aria-expanded="false" data-lang-toggle>
+          <span class="lang-code" data-current-lang-code>IT</span><span class="lang-flag flag-icon flag-it" data-current-lang-flag aria-hidden="true"></span>
+        </button>
+        <div class="lang-menu" role="menu" data-lang-menu>
+          <button type="button" role="menuitemradio" aria-checked="true" data-lang-option="it"><span>IT</span><span class="lang-flag flag-icon flag-it" aria-hidden="true"></span><em>Italiano</em></button>
+          <button type="button" role="menuitemradio" aria-checked="false" data-lang-option="en"><span>EN</span><span class="lang-flag flag-icon flag-gb" aria-hidden="true"></span><em>English</em></button>
+          <button type="button" role="menuitemradio" aria-checked="false" data-lang-option="fr"><span>FR</span><span class="lang-flag flag-icon flag-fr" aria-hidden="true"></span><em>Français</em></button>
+          <button type="button" role="menuitemradio" aria-checked="false" data-lang-option="es"><span>ES</span><span class="lang-flag flag-icon flag-es" aria-hidden="true"></span><em>Español</em></button>
+          <button type="button" role="menuitemradio" aria-checked="false" data-lang-option="de"><span>DE</span><span class="lang-flag flag-icon flag-de" aria-hidden="true"></span><em>Deutsch</em></button>
+        </div>
+      </div>
       <div class="mobile-cta">
         <a href="tel:+393934052210">Chiama ora</a><a href="mailto:ilpalazzettofarnese@outlook.com?subject=Richiesta%20informazioni%20-%20Il%20Palazzetto%20Farnese">E-mail</a>
       </div>
-      <p class="mobile-language-status"><strong>Lingue</strong> Inglese, francese, spagnolo e tedesco in preparazione.</p>
     </aside>
 
     <main id="main" tabindex="-1">
@@ -343,6 +360,7 @@
         <div class="footer-links"><a href="privacy.html">Privacy</a><a href="cookie.html">Cookie</a><a href="mailto:ilpalazzettofarnese@outlook.com">E-mail</a></div>
       </div>
     </footer>
-    <script src="assets/js/site.js?v=palazzetto-1"></script>
+    <script src="assets/js/i18n.js?v=palazzetto-1"></script>
+    <script src="assets/js/site.js?v=palazzetto-2"></script>
   </body>
 </html>

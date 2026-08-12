@@ -4,6 +4,7 @@ const mobileMenu = document.querySelector("[data-mobile-menu]");
 const main = document.getElementById("main");
 const pages = Array.from(document.querySelectorAll("[data-page]"));
 const pageLinks = Array.from(document.querySelectorAll("[data-page-link]"));
+const translated = (text) => window.palazzettoI18n?.translate(text) || text;
 
 function closeMenu({ restoreFocus = false } = {}) {
   document.body.classList.remove("is-locked");
@@ -12,7 +13,7 @@ function closeMenu({ restoreFocus = false } = {}) {
   if (mobileMenu) mobileMenu.inert = true;
   header?.classList.remove("is-open");
   menuToggle?.setAttribute("aria-expanded", "false");
-  menuToggle?.setAttribute("aria-label", "Apri menu");
+  menuToggle?.setAttribute("aria-label", translated("Apri menu"));
   if (main) main.inert = false;
   if (restoreFocus) menuToggle?.focus();
 }
@@ -24,7 +25,7 @@ function openMenu() {
   if (mobileMenu) mobileMenu.inert = false;
   header?.classList.add("is-open");
   menuToggle?.setAttribute("aria-expanded", "true");
-  menuToggle?.setAttribute("aria-label", "Chiudi menu");
+  menuToggle?.setAttribute("aria-label", translated("Chiudi menu"));
   if (main) main.inert = true;
   requestAnimationFrame(() => mobileMenu?.querySelector("a")?.focus());
 }
@@ -112,7 +113,8 @@ carouselSlides.forEach((_, index) => {
   const dot = document.createElement("button");
   dot.type = "button";
   dot.className = "carousel-dot";
-  dot.setAttribute("aria-label", `Vai all'immagine ${index + 1}`);
+  dot.dataset.i18nCarouselDot = String(index + 1);
+  dot.setAttribute("aria-label", translated(`Vai all'immagine ${index + 1}`));
   dot.addEventListener("click", () => {
     carouselIndex = index;
     updateCarousel();
@@ -131,7 +133,7 @@ const mapFrame = document.querySelector("[data-map-frame]");
 document.querySelector("[data-map-activate]")?.addEventListener("click", () => {
   if (!mapFrame || mapFrame.querySelector("iframe")) return;
   const iframe = document.createElement("iframe");
-  iframe.title = "Mappa de Il Palazzetto Farnese";
+  iframe.title = translated("Mappa de Il Palazzetto Farnese");
   iframe.loading = "lazy";
   iframe.referrerPolicy = "no-referrer-when-downgrade";
   iframe.src = mapFrame.dataset.mapSrc;
@@ -145,21 +147,28 @@ enquiryForm?.addEventListener("submit", (event) => {
   event.preventDefault();
   if (!enquiryForm.reportValidity()) return;
   const data = new FormData(enquiryForm);
-  const subject = "Richiesta disponibilità - Il Palazzetto Farnese";
+  const subject = translated("Richiesta disponibilità - Il Palazzetto Farnese");
   const body = [
-    `Nome: ${data.get("name") || ""}`,
+    `${translated("Nome")}: ${data.get("name") || ""}`,
     `E-mail: ${data.get("email") || ""}`,
-    `Telefono: ${data.get("phone") || ""}`,
-    `Tipo di soggiorno: ${data.get("type") || ""}`,
-    `Data o periodo: ${data.get("date") || ""}`,
-    `Numero di ospiti: ${data.get("guests") || ""}`,
+    `${translated("Telefono")}: ${data.get("phone") || ""}`,
+    `${translated("Tipo di soggiorno")}: ${translated(data.get("type") || "")}`,
+    `${translated("Data o periodo")}: ${data.get("date") || ""}`,
+    `${translated("Numero di ospiti")}: ${data.get("guests") || ""}`,
     "",
-    `Messaggio: ${data.get("message") || ""}`,
+    `${translated("Messaggio")}: ${data.get("message") || ""}`,
   ].join("\n");
-  if (formStatus) formStatus.textContent = "Apertura del programma e-mail…";
+  if (formStatus) formStatus.textContent = translated("Apertura del programma e-mail…");
   location.href = `mailto:ilpalazzettofarnese@outlook.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 });
 
 pages.forEach((page) => page.toggleAttribute("hidden", !page.classList.contains("is-active")));
 showPage(pageFromHash(), false, location.hash || "#home");
 setHeaderState();
+
+window.addEventListener("palazzetto:language", () => {
+  menuToggle?.setAttribute("aria-label", translated(menuToggle.getAttribute("aria-expanded") === "true" ? "Chiudi menu" : "Apri menu"));
+  document.querySelectorAll("[data-i18n-carousel-dot]").forEach((dot) => {
+    dot.setAttribute("aria-label", translated(`Vai all'immagine ${dot.dataset.i18nCarouselDot}`));
+  });
+});
