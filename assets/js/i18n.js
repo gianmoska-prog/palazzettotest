@@ -337,5 +337,3 @@
   window.palazzettoI18n = { applyLanguage, translate: (source) => translate(source), get language() { return currentLang; } };
   applyLanguage(currentLang);
 })();
-
-
