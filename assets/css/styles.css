@@ -3925,3 +3925,184 @@ body {
     grid-template-columns: 1fr;
   }
 }
+
+/* v24: supplied brand artwork and champagne-ivory site chrome */
+.site-header,
+.site-header.is-scrolled {
+  color: #2d2b28;
+  background: #fff8eb;
+  border-bottom-color: rgba(45, 43, 40, 0.14);
+  box-shadow: 0 10px 34px rgba(74, 59, 44, 0.1);
+}
+.brand--logo {
+  height: 54px;
+  display: flex;
+  align-items: center;
+  overflow: visible;
+}
+.brand-logo-window {
+  position: relative;
+  width: clamp(205px, 20vw, 285px);
+  height: 52px;
+  display: block;
+  overflow: hidden;
+}
+.brand-logo-window img {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: auto;
+  display: block;
+  transform: translateY(-50%);
+}
+.site-header .nav-link,
+.site-header .header-enquire,
+.site-header .lang-toggle,
+.site-header .menu-toggle {
+  color: #2d2b28;
+}
+.site-header .header-enquire,
+.site-header .lang-toggle,
+.site-header .menu-toggle {
+  border-color: rgba(45, 43, 40, 0.32);
+  background: rgba(45, 43, 40, 0.018);
+}
+.site-header .header-enquire:hover,
+.site-header .lang-toggle:hover,
+.site-header .language-switcher.is-open .lang-toggle,
+.site-header .menu-toggle:hover {
+  color: #1f1e1c;
+  background: rgba(133, 103, 70, 0.09);
+  border-color: rgba(92, 68, 46, 0.45);
+}
+.site-header .flag-icon {
+  border-color: rgba(45, 43, 40, 0.24);
+  box-shadow: 0 4px 12px rgba(62, 47, 35, 0.12);
+}
+.site-header .lang-menu,
+.legal-language .lang-menu {
+  color: #2d2b28;
+  background: rgba(255, 248, 235, 0.98);
+  border-color: rgba(45, 43, 40, 0.15);
+  box-shadow: 0 26px 70px rgba(63, 49, 37, 0.16);
+}
+.site-header .lang-menu:before,
+.legal-language .lang-menu:before {
+  border-color: rgba(45, 43, 40, 0.07);
+}
+.site-header .lang-menu button,
+.legal-language .lang-menu button {
+  color: rgba(45, 43, 40, 0.82);
+  border-bottom-color: rgba(45, 43, 40, 0.09);
+}
+.site-header .lang-menu button em,
+.legal-language .lang-menu button em {
+  color: rgba(45, 43, 40, 0.6);
+}
+.site-header .lang-menu button:hover,
+.site-header .lang-menu button[aria-checked="true"],
+.legal-language .lang-menu button:hover,
+.legal-language .lang-menu button[aria-checked="true"] {
+  color: #242220;
+  background: rgba(133, 103, 70, 0.09);
+}
+.site-header .lang-menu button[aria-checked="true"] em,
+.legal-language .lang-menu button[aria-checked="true"] em {
+  color: rgba(45, 43, 40, 0.88);
+}
+.mobile-menu {
+  color: #2d2b28;
+  background: #fff8eb;
+}
+.mobile-menu a,
+.mobile-menu .lang-toggle,
+.mobile-menu .lang-menu button {
+  color: #2d2b28;
+}
+.mobile-menu .mobile-nav a,
+.mobile-menu .mobile-cta a,
+.mobile-menu .lang-toggle {
+  border-color: rgba(45, 43, 40, 0.18);
+}
+.mobile-menu .mobile-nav small,
+.mobile-menu .lang-menu button em {
+  color: rgba(45, 43, 40, 0.58);
+}
+.mobile-menu .mobile-cta a {
+  background: rgba(133, 103, 70, 0.06);
+}
+.mobile-menu .lang-menu {
+  background: rgba(243, 232, 213, 0.62);
+  border-color: rgba(45, 43, 40, 0.12);
+}
+.footer-minimal {
+  color: #2d2b28;
+  background: #fff8eb;
+  border-top: 1px solid rgba(45, 43, 40, 0.13);
+}
+.footer-minimal .footer-wordmark,
+.footer-minimal .footer-contact,
+.footer-minimal .footer-links,
+.footer-minimal a {
+  color: #2d2b28;
+}
+.footer-minimal .footer-wordmark span {
+  color: rgba(45, 43, 40, 0.58);
+}
+.footer-minimal .footer-links a {
+  border-color: rgba(45, 43, 40, 0.2);
+}
+.hero-logo-stage {
+  width: min(46vw, 470px);
+  max-width: 470px;
+}
+.hero-mark {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+}
+.hero-mark::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 3%;
+  bottom: 3%;
+  left: 50%;
+  width: 100vw;
+  display: block;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.05);
+  filter: none;
+  border-radius: 0;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+.hero-logo {
+  width: 100%;
+  opacity: 1;
+  filter: none;
+}
+
+@media (max-width: 760px) {
+  .brand--logo {
+    height: 48px;
+  }
+  .brand-logo-window {
+    width: min(53vw, 205px);
+    height: 46px;
+  }
+  .hero-logo-stage {
+    width: min(78vw, 360px);
+    min-width: 220px;
+  }
+  .hero-mark::before {
+    top: 4%;
+    bottom: 4%;
+  }
+}
