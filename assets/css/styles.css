@@ -4106,3 +4106,79 @@ body {
     bottom: 4%;
   }
 }
+
+/* v25: centered crest, graduated hero band and deeper section overlays */
+.home-content {
+  justify-items: center;
+}
+.hero-logo-stage {
+  margin-right: 0;
+}
+.hero-mark::before {
+  top: 3%;
+  bottom: 3%;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.1);
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(0, 0, 0, 0.25) 7%,
+    #000 18%,
+    #000 82%,
+    rgba(0, 0, 0, 0.25) 93%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(0, 0, 0, 0.25) 7%,
+    #000 18%,
+    #000 82%,
+    rgba(0, 0, 0, 0.25) 93%,
+    transparent 100%
+  );
+}
+.brand--logo {
+  height: 70px;
+}
+.brand-logo-window {
+  width: clamp(270px, 27vw, 410px);
+  height: 70px;
+}
+.brand-logo-window img {
+  filter: saturate(1.08) contrast(1.16) brightness(0.82);
+}
+.page-hero {
+  background:
+    linear-gradient(180deg, rgba(11, 18, 24, 0.22), rgba(11, 18, 24, 0.78)),
+    var(--page-image, url("../img/hero-lago-cielo.webp")) center / cover no-repeat;
+}
+.page[data-page="dimora"] .page-hero {
+  background-position: center, center 50%;
+}
+.page[data-page="camere"] .page-hero {
+  background-position: center, 51% center;
+}
+.page[data-page="servizi"] .page-hero {
+  background-position: center, 42% center;
+}
+
+@media (max-width: 760px) {
+  .brand--logo {
+    height: 56px;
+  }
+  .brand-logo-window {
+    width: min(58vw, 235px);
+    height: 56px;
+  }
+  .page[data-page="dimora"] .page-hero {
+    background-position: center, 58% center;
+  }
+  .page[data-page="camere"] .page-hero {
+    background-position: center, 54% center;
+  }
+  .page[data-page="servizi"] .page-hero {
+    background-position: center, 38% center;
+  }
+}
