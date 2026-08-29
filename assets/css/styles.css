@@ -4606,3 +4606,72 @@ body {
     opacity: 1;
   }
 }
+
+/* v34: photographic section banners with a restrained low-opacity treatment */
+.page:not(.home) .page-hero {
+  background-image:
+    linear-gradient(
+      90deg,
+      rgba(30, 27, 24, 0.68) 0%,
+      rgba(30, 27, 24, 0.53) 48%,
+      rgba(30, 27, 24, 0.61) 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(255, 244, 226, 0.1) 0%,
+      rgba(35, 30, 26, 0.18) 54%,
+      rgba(26, 24, 22, 0.42) 100%
+    ),
+    var(--page-image, url("../img/hero-lago-cielo.webp")) !important;
+  background-position:
+    center,
+    center,
+    var(--banner-position, center) !important;
+  background-size: cover, cover, cover !important;
+  background-repeat: no-repeat !important;
+  background-color: #4a433d;
+}
+.page:not(.home) .page-hero::before {
+  background:
+    linear-gradient(125deg, rgba(255, 248, 235, 0.09), transparent 40%),
+    linear-gradient(90deg, rgba(19, 18, 17, 0.14), transparent 66%);
+  opacity: 1;
+}
+.page[data-page="dimora"] .page-hero {
+  --banner-position: center 56%;
+}
+.page[data-page="camere"] .page-hero {
+  --banner-position: center 57%;
+}
+.page[data-page="servizi"] .page-hero {
+  --banner-position: center 53%;
+}
+.page[data-page="contatti"] .page-hero {
+  --banner-position: center 28%;
+}
+
+@media (max-width: 760px) {
+  .page:not(.home) .page-hero {
+    background-image:
+      linear-gradient(
+        90deg,
+        rgba(30, 27, 24, 0.7) 0%,
+        rgba(30, 27, 24, 0.55) 66%,
+        rgba(30, 27, 24, 0.62) 100%
+      ),
+      linear-gradient(180deg, rgba(255, 244, 226, 0.08), rgba(27, 24, 22, 0.42)),
+      var(--page-image, url("../img/hero-lago-cielo.webp")) !important;
+  }
+  .page[data-page="dimora"] .page-hero {
+    --banner-position: 59% center;
+  }
+  .page[data-page="camere"] .page-hero {
+    --banner-position: 54% center;
+  }
+  .page[data-page="servizi"] .page-hero {
+    --banner-position: 45% center;
+  }
+  .page[data-page="contatti"] .page-hero {
+    --banner-position: center 30%;
+  }
+}
