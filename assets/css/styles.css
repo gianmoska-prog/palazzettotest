@@ -4380,3 +4380,11 @@ body {
     drop-shadow(0 2px 2px rgba(20, 14, 11, 0.58))
     drop-shadow(0 15px 34px rgba(20, 14, 11, 0.34));
 }
+
+/* v32: canonical supplied logo, original colours and complete detail */
+.hero-logo {
+  filter:
+    drop-shadow(0 0 0.7px rgba(255, 248, 235, 0.96))
+    drop-shadow(0 0 2px rgba(255, 248, 235, 0.58))
+    drop-shadow(0 12px 28px rgba(20, 14, 11, 0.34));
+}
