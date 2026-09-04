@@ -4982,3 +4982,138 @@ body {
     letter-spacing: 0.1em;
   }
 }
+
+/* v37: full-site visual and editorial audit */
+.page:not(.home) .page-hero,
+.page[data-page="dimora"] .page-hero,
+.page[data-page="camere"] .page-hero,
+.page[data-page="servizi"] .page-hero,
+.page[data-page="contatti"] .page-hero {
+  min-height: clamp(360px, 42svh, 460px);
+}
+
+.page-hero h2 {
+  max-width: 880px;
+  text-wrap: balance;
+}
+
+.page-hero p {
+  max-width: 640px;
+}
+
+.service-notice {
+  margin-top: 28px;
+  background: linear-gradient(100deg, rgba(255, 255, 255, 0.42), rgba(223, 229, 216, 0.38));
+}
+
+.official-data {
+  margin-top: clamp(42px, 5vw, 64px);
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.official-data__head {
+  padding: clamp(24px, 3vw, 38px);
+}
+
+.official-data__head h3 {
+  font-size: clamp(1.9rem, 3vw, 3.1rem);
+}
+
+.official-data__grid div {
+  padding: clamp(18px, 2vw, 24px);
+}
+
+.amenity-list span {
+  font-size: 0.72rem;
+  line-height: 1.35;
+}
+
+.room-facts dt {
+  font-size: 0.66rem;
+}
+
+@media (max-width: 760px) {
+  .page:not(.home) .page-hero,
+  .page[data-page="dimora"] .page-hero,
+  .page[data-page="camere"] .page-hero,
+  .page[data-page="servizi"] .page-hero,
+  .page[data-page="contatti"] .page-hero {
+    min-height: clamp(300px, 40svh, 360px);
+  }
+
+  .portal-location {
+    font-size: 0.64rem;
+    line-height: 1.35;
+  }
+
+  .home-content--portale .hero-actions .button {
+    min-height: 44px;
+    padding: 11px 16px;
+    font-size: 0.69rem;
+    letter-spacing: 0.13em;
+  }
+
+  .button {
+    font-size: 0.72rem;
+  }
+
+  .contact-method {
+    min-height: 96px;
+    grid-template-columns: 44px minmax(0, 1fr);
+    align-content: center;
+    align-items: center;
+    gap: 18px;
+    padding: 18px 20px;
+  }
+
+  .contact-method::before {
+    inset: 9px;
+  }
+
+  .contact-method__mark {
+    width: 44px;
+    height: 44px;
+  }
+
+  .contact-method strong {
+    font-size: 1.35rem;
+  }
+
+  .contact-method em {
+    margin-top: 6px;
+    overflow-wrap: anywhere;
+  }
+
+  .official-data__head {
+    padding: 24px 20px 20px;
+  }
+
+  .official-data__head h3 {
+    font-size: 2rem;
+  }
+
+  .official-data__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .official-data__grid div {
+    padding: 18px 15px;
+  }
+
+  .official-data__grid dt {
+    font-size: 0.67rem;
+  }
+
+  .official-data__grid dd {
+    margin-top: 10px;
+    font-size: 0.82rem;
+  }
+
+  .room-facts dt {
+    font-size: 0.69rem;
+  }
+
+  .amenity-list span {
+    font-size: 0.74rem;
+  }
+}

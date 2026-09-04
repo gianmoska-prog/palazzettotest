@@ -36,6 +36,16 @@ function pageFromHash() {
   return pages.some((page) => page.dataset.page === hash) ? hash : "home";
 }
 
+function resetPageScroll() {
+  const root = document.documentElement;
+  const previousBehavior = root.style.scrollBehavior;
+  root.style.scrollBehavior = "auto";
+  window.scrollTo(0, 0);
+  document.body.scrollTop = 0;
+  root.scrollTop = 0;
+  root.style.scrollBehavior = previousBehavior;
+}
+
 function showPage(id, push = true, requestedHash = null) {
   const next = pages.find((page) => page.dataset.page === id) || pages[0];
   pages.forEach((page) => {
@@ -55,7 +65,7 @@ function showPage(id, push = true, requestedHash = null) {
   if (destination === "#richiesta") {
     requestAnimationFrame(() => document.getElementById("richiesta")?.scrollIntoView());
   } else {
-    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    resetPageScroll();
   }
   requestAnimationFrame(() => main?.focus({ preventScroll: true }));
 }
