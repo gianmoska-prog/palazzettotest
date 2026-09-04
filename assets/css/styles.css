@@ -3093,7 +3093,7 @@ body {
 .palazzetto-still {
   background:
     linear-gradient(180deg, rgba(15, 25, 33, 0.06), rgba(15, 25, 33, 0.28)),
-    url("../img/gallery-piscina.webp") center / cover no-repeat;
+    url("../img/real/12-entrance-staircase.webp") center 42% / cover no-repeat;
 }
 .lang-toggle:disabled {
   cursor: default;
@@ -4673,5 +4673,114 @@ body {
   }
   .page[data-page="contatti"] .page-hero {
     --banner-position: center 30%;
+  }
+}
+
+/* v35: real-photography integration and responsive editorial crops */
+.home {
+  background-image: url("../img/real/13-historic-lane.webp");
+}
+
+.page[data-page="dimora"] .page-hero {
+  --banner-position: center 58%;
+}
+.page[data-page="camere"] .page-hero {
+  --banner-position: center 48%;
+}
+.page[data-page="servizi"] .page-hero {
+  --banner-position: center 49%;
+}
+.page[data-page="contatti"] .page-hero {
+  --banner-position: center 54%;
+}
+
+.carousel-slide--entrance img,
+.carousel-slide--stairs img {
+  object-position: center 47%;
+}
+
+.room-gallery {
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+.room-gallery__main {
+  grid-column: 1 / -1;
+}
+.room-gallery figure:not(.room-gallery__main) {
+  grid-column: span 2;
+}
+.room-gallery__sign img {
+  object-position: 35% 42%;
+}
+.room-showcase:nth-child(2) .room-gallery__sign img {
+  object-position: 32% 41%;
+}
+.room-gallery img,
+.common-area-gallery img,
+.carousel-slide img {
+  filter: none;
+}
+.room-gallery__main img {
+  object-position: center 52%;
+}
+.common-area-gallery figure:nth-child(2) img {
+  object-position: center 55%;
+  transform: none;
+}
+.common-area-gallery figure:nth-child(3) img {
+  object-position: center 54%;
+}
+
+@media (max-width: 1000px) {
+  .room-showcase--reverse .room-showcase__copy {
+    order: 1;
+  }
+  .room-showcase--reverse .room-gallery {
+    order: 2;
+  }
+}
+
+@media (max-width: 760px) {
+  .page[data-page="dimora"] .page-hero {
+    --banner-position: 60% center;
+  }
+  .page[data-page="camere"] .page-hero {
+    --banner-position: 57% center;
+  }
+  .page[data-page="servizi"] .page-hero {
+    --banner-position: 47% center;
+  }
+  .page[data-page="contatti"] .page-hero {
+    --banner-position: 57% center;
+  }
+  .carousel-slide {
+    aspect-ratio: 4 / 5;
+  }
+  .carousel-slide--entrance img,
+  .carousel-slide--stairs img {
+    object-position: center 45%;
+  }
+  .room-gallery {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .room-gallery__main {
+    grid-column: 1 / -1;
+    aspect-ratio: 4 / 3 !important;
+  }
+  .room-gallery figure:not(.room-gallery__main) {
+    grid-column: span 1;
+    aspect-ratio: 1 / 1;
+  }
+  .room-gallery .room-gallery__sign {
+    grid-column: 1 / -1;
+    aspect-ratio: 16 / 10;
+  }
+  .room-gallery__sign img {
+    object-position: 31% 37%;
+  }
+  .room-showcase:nth-child(2) .room-gallery__sign img {
+    object-position: 28% 38%;
+  }
+  .common-area-gallery__main {
+    aspect-ratio: 4 / 3 !important;
   }
 }
