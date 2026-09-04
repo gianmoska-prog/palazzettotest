@@ -4789,10 +4789,12 @@ body {
 .room-showcase--reverse {
   grid-template-columns: minmax(0, 1.28fr) minmax(300px, 0.72fr);
 }
-.room-gallery figure {
+.room-gallery figure,
+.common-area-gallery figure {
   position: relative;
 }
-.room-gallery figure::after {
+.room-gallery figure::after,
+.common-area-gallery figure::after {
   content: "+";
   position: absolute;
   right: 10px;
@@ -4810,19 +4812,24 @@ body {
   pointer-events: none;
   transition: transform 180ms ease, background 180ms ease;
 }
-.room-gallery img {
+.room-gallery img,
+.common-area-gallery img {
   cursor: zoom-in;
   transition: transform 550ms var(--ease), filter 550ms var(--ease);
 }
-.room-gallery img:hover {
+.room-gallery img:hover,
+.common-area-gallery img:hover {
   transform: scale(1.018);
 }
-.room-gallery img:focus-visible {
+.room-gallery img:focus-visible,
+.common-area-gallery img:focus-visible {
   outline: 3px solid rgba(176, 138, 88, 0.92);
   outline-offset: -4px;
 }
 .room-gallery figure:has(img:hover)::after,
-.room-gallery figure:has(img:focus-visible)::after {
+.room-gallery figure:has(img:focus-visible)::after,
+.common-area-gallery figure:has(img:hover)::after,
+.common-area-gallery figure:has(img:focus-visible)::after {
   transform: scale(1.08);
   background: #fff8eb;
 }
@@ -4945,7 +4952,8 @@ body {
     grid-column: 1 / -1;
     aspect-ratio: 16 / 10;
   }
-  .room-gallery figure::after {
+  .room-gallery figure::after,
+  .common-area-gallery figure::after {
     right: 7px;
     bottom: 7px;
     width: 28px;

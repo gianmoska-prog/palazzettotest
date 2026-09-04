@@ -145,7 +145,7 @@ const lightboxCaption = document.querySelector("[data-lightbox-caption]");
 const lightboxClose = document.querySelector("[data-lightbox-close]");
 const lightboxPrev = document.querySelector("[data-lightbox-prev]");
 const lightboxNext = document.querySelector("[data-lightbox-next]");
-const roomPhotos = Array.from(document.querySelectorAll(".room-gallery img"));
+const roomPhotos = Array.from(document.querySelectorAll(".room-gallery img, .common-area-gallery img"));
 let lightboxPhotos = [];
 let lightboxIndex = 0;
 let lightboxTrigger = null;
@@ -174,7 +174,7 @@ function moveLightbox(direction) {
 
 function openLightbox(image) {
   if (!photoLightbox || !image) return;
-  lightboxPhotos = Array.from(image.closest(".room-gallery")?.querySelectorAll("img") || []);
+  lightboxPhotos = Array.from(image.closest(".room-gallery, .common-area-gallery")?.querySelectorAll("img") || []);
   lightboxIndex = Math.max(0, lightboxPhotos.indexOf(image));
   lightboxTrigger = image;
   updateLightbox();
