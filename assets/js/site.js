@@ -129,6 +129,83 @@ document.querySelector("[data-carousel]")?.addEventListener("keydown", (event) =
 });
 updateCarousel();
 
+const photoLightbox = document.querySelector("[data-photo-lightbox]");
+const lightboxImage = document.querySelector("[data-lightbox-image]");
+const lightboxCaption = document.querySelector("[data-lightbox-caption]");
+const lightboxClose = document.querySelector("[data-lightbox-close]");
+const lightboxPrev = document.querySelector("[data-lightbox-prev]");
+const lightboxNext = document.querySelector("[data-lightbox-next]");
+const roomPhotos = Array.from(document.querySelectorAll(".room-gallery img"));
+let lightboxPhotos = [];
+let lightboxIndex = 0;
+let lightboxTrigger = null;
+
+function labelRoomPhotos() {
+  roomPhotos.forEach((image) => {
+    image.tabIndex = 0;
+    image.setAttribute("role", "button");
+    image.setAttribute("aria-label", `${image.alt}. ${translated("Apri fotografia a schermo intero")}`);
+  });
+}
+
+function updateLightbox() {
+  const image = lightboxPhotos[lightboxIndex];
+  if (!image || !lightboxImage || !lightboxCaption) return;
+  lightboxImage.src = image.currentSrc || image.src;
+  lightboxImage.alt = image.alt;
+  lightboxCaption.textContent = image.alt;
+}
+
+function moveLightbox(direction) {
+  if (!lightboxPhotos.length) return;
+  lightboxIndex = (lightboxIndex + direction + lightboxPhotos.length) % lightboxPhotos.length;
+  updateLightbox();
+}
+
+function openLightbox(image) {
+  if (!photoLightbox || !image) return;
+  lightboxPhotos = Array.from(image.closest(".room-gallery")?.querySelectorAll("img") || []);
+  lightboxIndex = Math.max(0, lightboxPhotos.indexOf(image));
+  lightboxTrigger = image;
+  updateLightbox();
+  document.body.classList.add("is-locked");
+  photoLightbox.showModal();
+  requestAnimationFrame(() => lightboxClose?.focus());
+}
+
+function closeLightbox() {
+  if (!photoLightbox?.open) return;
+  photoLightbox.close();
+}
+
+roomPhotos.forEach((image) => {
+  image.addEventListener("click", () => openLightbox(image));
+  image.addEventListener("keydown", (event) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      openLightbox(image);
+    }
+  });
+});
+lightboxClose?.addEventListener("click", closeLightbox);
+lightboxPrev?.addEventListener("click", () => moveLightbox(-1));
+lightboxNext?.addEventListener("click", () => moveLightbox(1));
+photoLightbox?.addEventListener("click", (event) => {
+  if (event.target === photoLightbox) closeLightbox();
+});
+photoLightbox?.addEventListener("close", () => {
+  document.body.classList.remove("is-locked");
+  lightboxImage?.removeAttribute("src");
+  lightboxTrigger?.focus();
+  lightboxTrigger = null;
+});
+document.addEventListener("keydown", (event) => {
+  if (!photoLightbox?.open) return;
+  if (event.key === "ArrowLeft") moveLightbox(-1);
+  if (event.key === "ArrowRight") moveLightbox(1);
+});
+labelRoomPhotos();
+
 const mapFrame = document.querySelector("[data-map-frame]");
 document.querySelector("[data-map-activate]")?.addEventListener("click", () => {
   if (!mapFrame || mapFrame.querySelector("iframe")) return;
@@ -171,4 +248,5 @@ window.addEventListener("palazzetto:language", () => {
   document.querySelectorAll("[data-i18n-carousel-dot]").forEach((dot) => {
     dot.setAttribute("aria-label", translated(`Vai all'immagine ${dot.dataset.i18nCarouselDot}`));
   });
+  labelRoomPhotos();
 });
