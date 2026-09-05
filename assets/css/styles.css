@@ -5149,3 +5149,68 @@ body {
     font-size: 0.74rem;
   }
 }
+
+/* Full photographs: preserve the source frame outside decorative banners. */
+.home {
+  background-image: url("../img/hero-video-poster.jpg");
+}
+.room-gallery figure,
+.common-area-gallery figure {
+  background: #eee6d9;
+}
+.room-gallery .room-gallery__main,
+.common-area-gallery .common-area-gallery__main {
+  aspect-ratio: auto !important;
+}
+.room-gallery .room-gallery__main img,
+.common-area-gallery .common-area-gallery__main img {
+  height: auto;
+}
+.room-gallery img,
+.common-area-gallery img,
+.carousel-slide img,
+.palazzetto-still img {
+  object-fit: contain;
+  object-position: center !important;
+  transform: none !important;
+  filter: none !important;
+}
+.carousel-slide {
+  aspect-ratio: auto;
+  display: grid;
+  grid-template-rows: clamp(300px, 48vw, 580px) auto;
+  background: #eee6d9;
+}
+.carousel-slide img {
+  min-height: 0;
+  padding: 12px;
+}
+.carousel-slide figcaption {
+  position: static;
+  padding: 18px 24px;
+  background: #fff8eb;
+  color: #302c27;
+  text-shadow: none;
+  font-size: clamp(1rem, 1.6vw, 1.35rem);
+  line-height: 1.45;
+}
+.palazzetto-still {
+  background: #eee6d9;
+  aspect-ratio: auto;
+  min-height: 0;
+}
+.palazzetto-still img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 620px;
+}
+.palazzetto-still::before,
+.palazzetto-still::after {
+  display: none;
+}
+@media (max-width: 760px) {
+  .carousel-slide { grid-template-rows: 380px auto; }
+  .carousel-slide img { padding: 8px; }
+  .carousel-slide figcaption { padding: 15px 18px; }
+}
