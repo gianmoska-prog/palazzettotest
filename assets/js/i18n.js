@@ -255,6 +255,8 @@
     ["Tavolo da pranzo e zona relax dell'area comune", "Dining table and relaxation area in the shared space", "Table à manger et espace détente de la zone commune", "Mesa de comedor y zona de descanso del espacio común", "Esstisch und Ruhebereich im Gemeinschaftsraum"],
     ["Angolo cottura attrezzato dell'area comune", "Equipped kitchenette in the shared area", "Coin cuisine équipé de l'espace commun", "Cocina equipada de la zona común", "Ausgestattete Küchenzeile im Gemeinschaftsbereich"],
     ["Bollitore, macchina del caffè, tostapane e forno elettrico dell'area comune", "Kettle, coffee machine, toaster and electric oven in the shared area", "Bouilloire, machine à café, grille-pain et four électrique de l'espace commun", "Hervidor, cafetera, tostadora y horno eléctrico de la zona común", "Wasserkocher, Kaffeemaschine, Toaster und Elektrobackofen im Gemeinschaftsbereich"],
+    ["Riproduci video", "Play video", "Lire la vidéo", "Reproducir vídeo", "Video abspielen"],
+    ["Pausa video", "Pause video", "Mettre en pause", "Pausar vídeo", "Video pausieren"],
     ["Visualizzatore fotografie", "Photo viewer", "Visionneuse de photos", "Visor de fotografías", "Fotoansicht"],
     ["Apri fotografia a schermo intero", "Open photograph full screen", "Ouvrir la photo en plein écran", "Abrir fotografía a pantalla completa", "Foto im Vollbild öffnen"],
     ["Chiudi fotografia", "Close photograph", "Fermer la photo", "Cerrar fotografía", "Foto schließen"],

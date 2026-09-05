@@ -1403,7 +1403,6 @@ main:focus {
     scroll-behavior: auto;
   }
   .page,
-  .carousel-track,
   .mobile-menu,
   .video-modal,
   .wine-modal,
@@ -4288,7 +4287,24 @@ body {
   .hero-video {
     display: none;
   }
+  .hero-video.is-user-playing { display: block; }
+  .carousel-track { transition: none; }
 }
+
+.carousel-stage { touch-action: pan-y pinch-zoom; }
+.hero-video-toggle {
+  margin-top: 16px;
+  padding: 10px 16px;
+  min-height: 44px;
+  border: 1px solid rgba(255,248,235,.55);
+  border-radius: 24px;
+  background: rgba(35,29,24,.65);
+  color: #fff8eb;
+  font: inherit;
+  font-size: .8rem;
+  cursor: pointer;
+}
+.hero-video-toggle:focus-visible { outline: 2px solid #fff8eb; outline-offset: 3px; }
 
 /* v29: focused champagne light, crisp detailing and deeper film grade */
 .hero-video {
