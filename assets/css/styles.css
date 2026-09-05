@@ -5214,3 +5214,70 @@ body {
   .carousel-slide img { padding: 8px; }
   .carousel-slide figcaption { padding: 15px 18px; }
 }
+
+/* Mobile Portale stays centred even when iOS disables motion. Use normal
+   document flow so text, browser chrome and larger fonts cannot overlap it. */
+@media (max-width: 760px) {
+  .home-content--portale {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 28px;
+    min-height: 100vh;
+    min-height: 100svh;
+    padding: calc(var(--header-h) + 28px) 20px 0;
+  }
+  .home-content--portale .portal-copy {
+    position: relative;
+    inset: auto;
+    order: 0;
+    width: 100%;
+    max-width: 460px;
+    padding: 0;
+    flex: none;
+  }
+  .home-content--portale .portal-shell {
+    position: relative;
+    inset: auto;
+    order: 1;
+    align-self: center;
+    flex: none;
+    width: 280px;
+    width: min(76vw, 310px);
+    min-width: 0;
+    max-width: 100%;
+    height: auto;
+    min-height: 0;
+    margin: auto auto 0;
+    padding: 36px 18px 26px;
+    transform: none;
+    opacity: 1;
+    will-change: auto;
+  }
+  .home.is-active .home-content--portale .portal-shell,
+  .home.is-active .home-content--portale .portal-copy {
+    animation: none;
+    transform: none;
+    opacity: 1;
+  }
+  .home-content--portale .hero-mark {
+    width: 100%;
+    min-width: 0;
+    transform: none;
+  }
+  .home-content--portale .hero-proof {
+    font-size: clamp(1.4rem, 6vw, 1.85rem);
+    line-height: 1.12;
+  }
+  .home-content--portale .hero-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    width: 100%;
+  }
+  .home-content--portale .hero-actions .button {
+    width: 100%;
+    white-space: normal;
+  }
+}
