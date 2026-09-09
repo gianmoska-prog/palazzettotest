@@ -140,46 +140,47 @@ document.querySelector("[data-carousel]")?.addEventListener("keydown", (event) =
 updateCarousel();
 
 // A horizontal swipe advances photos; vertical scrolling remains native.
-const carouselStage = document.querySelector('.carousel-stage');
+const carouselStage = document.querySelector(".carousel-stage");
 let swipeStart = null;
-carouselStage?.addEventListener('touchstart', event => {
-  swipeStart = event.touches.length === 1 ? {x:event.touches[0].clientX,y:event.touches[0].clientY} : null;
-}, {passive:true});
-carouselStage?.addEventListener('touchend', event => {
+carouselStage?.addEventListener("touchstart", (event) => {
+  swipeStart = event.touches.length === 1 ? { x: event.touches[0].clientX, y: event.touches[0].clientY } : null;
+}, { passive: true });
+carouselStage?.addEventListener("touchend", (event) => {
   if (!swipeStart || !event.changedTouches.length) return;
   const dx = event.changedTouches[0].clientX - swipeStart.x;
   const dy = event.changedTouches[0].clientY - swipeStart.y;
   swipeStart = null;
   if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.5) moveCarousel(dx < 0 ? 1 : -1);
-}, {passive:true});
-carouselStage?.addEventListener('touchcancel', () => { swipeStart = null; });
+}, { passive: true });
+carouselStage?.addEventListener("touchcancel", () => { swipeStart = null; });
 
-const heroVideo = document.querySelector('.hero-video');
-const heroVideoToggle = document.querySelector('[data-hero-video-toggle]');
-const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
-function updateVideoToggle() {
-  if (heroVideoToggle && heroVideo) heroVideoToggle.textContent = translated(heroVideo.paused ? 'Riproduci video' : 'Pausa video');
-}
-heroVideo?.addEventListener('play', updateVideoToggle);
-heroVideo?.addEventListener('pause', updateVideoToggle);
-heroVideoToggle?.addEventListener('click', () => {
+// The hero video is decorative. Keep the iOS-safe muted inline playback attempt,
+// but do not expose a large play/pause control inside the primary CTA stack.
+const heroVideo = document.querySelector(".hero-video");
+document.querySelector("[data-hero-video-toggle]")?.remove();
+const motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+function syncHeroVideoWithMotionPreference() {
   if (!heroVideo) return;
-  if (!heroVideo.paused) { heroVideo.pause(); return; }
-  heroVideo.classList.add('is-user-playing');
-  heroVideo.muted = true;
-  heroVideo.play().catch(updateVideoToggle);
-});
-motionPreference.addEventListener('change', () => {
+  heroVideo.classList.remove("is-user-playing");
   if (motionPreference.matches) {
-    heroVideo?.pause();
-    heroVideo?.classList.remove('is-user-playing');
+    heroVideo.pause();
+    return;
   }
-});
-window.addEventListener('palazzetto:language', updateVideoToggle);
-if (heroVideo && !motionPreference.matches) {
   heroVideo.muted = true;
-  heroVideo.play().catch(updateVideoToggle);
+  const playAttempt = heroVideo.play();
+  playAttempt?.catch?.(() => {
+    // Safari may refuse autoplay in some circumstances. The poster remains a
+    // deliberate fallback, so the page never depends on playback to compose.
+  });
 }
+
+if (typeof motionPreference.addEventListener === "function") {
+  motionPreference.addEventListener("change", syncHeroVideoWithMotionPreference);
+} else {
+  motionPreference.addListener?.(syncHeroVideoWithMotionPreference);
+}
+syncHeroVideoWithMotionPreference();
 
 const photoLightbox = document.querySelector("[data-photo-lightbox]");
 const lightboxImage = document.querySelector("[data-lightbox-image]");
