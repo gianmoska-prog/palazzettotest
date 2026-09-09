@@ -6,13 +6,52 @@ const pages = Array.from(document.querySelectorAll("[data-page]"));
 const pageLinks = Array.from(document.querySelectorAll("[data-page-link]"));
 const translated = (text) => window.palazzettoI18n?.translate(text) || text;
 
+// Patch 3: curate the live Dimora photography without deleting source assets.
+// The three staircase files are temporarily withdrawn from presentation because
+// they are the client-flagged images awaiting a proper photographic retouch.
+// This runs before carousel/lightbox discovery so counts, dots and photo groups
+// are built from the final visible selection rather than from hidden slides.
+const dimoraFeatureImage = document.querySelector(".palazzetto-still img");
+if (dimoraFeatureImage) {
+  dimoraFeatureImage.src = "assets/img/real/14-view-to-lane.webp";
+  dimoraFeatureImage.alt = translated("Il borgo fuori dalla porta");
+  dimoraFeatureImage.width = 1536;
+  dimoraFeatureImage.height = 1024;
+}
+
+const dimoraTrackForCuration = document.querySelector("[data-carousel-track]");
+if (dimoraTrackForCuration) {
+  const dimoraFigures = Array.from(dimoraTrackForCuration.querySelectorAll(".carousel-slide"));
+  const archFigure = dimoraFigures.find((figure) => figure.querySelector('img[src*="10-staircase-arch.webp"]'));
+  if (archFigure) {
+    const image = archFigure.querySelector("img");
+    const caption = archFigure.querySelector("figcaption");
+    archFigure.classList.remove("carousel-slide--stairs");
+    archFigure.classList.add("carousel-slide--lane");
+    if (image) {
+      image.src = "assets/img/real/13-historic-lane.webp";
+      image.alt = translated("Il borgo fuori dalla porta");
+      image.width = 1536;
+      image.height = 1024;
+    }
+    if (caption) caption.textContent = translated("Il borgo fuori dalla porta");
+  }
+
+  ["11-staircase-plant.webp", "14-view-to-lane.webp"].forEach((filename) => {
+    const figure = Array.from(dimoraTrackForCuration.querySelectorAll(".carousel-slide")).find(
+      (slide) => slide.querySelector(`img[src*="${filename}"]`),
+    );
+    figure?.remove();
+  });
+}
+
 // Patch 2 keeps gallery presentation isolated from the legacy stylesheet until
 // the final cleanup pass. Loading it after styles.css lets the page use concise
 // editorial crops while the lightbox continues to show the complete frame.
 if (!document.querySelector("link[data-gallery-editorial]")) {
   const galleryStyles = document.createElement("link");
   galleryStyles.rel = "stylesheet";
-  galleryStyles.href = "assets/css/gallery-editorial.css?v=1";
+  galleryStyles.href = "assets/css/gallery-editorial.css?v=2";
   galleryStyles.dataset.galleryEditorial = "true";
   document.head.appendChild(galleryStyles);
 }
