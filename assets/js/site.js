@@ -6,56 +6,6 @@ const pages = Array.from(document.querySelectorAll("[data-page]"));
 const pageLinks = Array.from(document.querySelectorAll("[data-page-link]"));
 const translated = (text) => window.palazzettoI18n?.translate(text) || text;
 
-// Patch 3: curate the live Dimora photography without deleting source assets.
-// The three staircase files are temporarily withdrawn from presentation because
-// they are the client-flagged images awaiting a proper photographic retouch.
-// This runs before carousel/lightbox discovery so counts, dots and photo groups
-// are built from the final visible selection rather than from hidden slides.
-const dimoraFeatureImage = document.querySelector(".palazzetto-still img");
-if (dimoraFeatureImage) {
-  dimoraFeatureImage.src = "assets/img/real/14-view-to-lane.webp";
-  dimoraFeatureImage.alt = translated("Il borgo fuori dalla porta");
-  dimoraFeatureImage.width = 1536;
-  dimoraFeatureImage.height = 1024;
-}
-
-const dimoraTrackForCuration = document.querySelector("[data-carousel-track]");
-if (dimoraTrackForCuration) {
-  const dimoraFigures = Array.from(dimoraTrackForCuration.querySelectorAll(".carousel-slide"));
-  const archFigure = dimoraFigures.find((figure) => figure.querySelector('img[src*="10-staircase-arch.webp"]'));
-  if (archFigure) {
-    const image = archFigure.querySelector("img");
-    const caption = archFigure.querySelector("figcaption");
-    archFigure.classList.remove("carousel-slide--stairs");
-    archFigure.classList.add("carousel-slide--lane");
-    if (image) {
-      image.src = "assets/img/real/13-historic-lane.webp";
-      image.alt = translated("Il borgo fuori dalla porta");
-      image.width = 1536;
-      image.height = 1024;
-    }
-    if (caption) caption.textContent = translated("Il borgo fuori dalla porta");
-  }
-
-  ["11-staircase-plant.webp", "14-view-to-lane.webp"].forEach((filename) => {
-    const figure = Array.from(dimoraTrackForCuration.querySelectorAll(".carousel-slide")).find(
-      (slide) => slide.querySelector(`img[src*="${filename}"]`),
-    );
-    figure?.remove();
-  });
-}
-
-// Patch 2 keeps gallery presentation isolated from the legacy stylesheet until
-// the final cleanup pass. Loading it after styles.css lets the page use concise
-// editorial crops while the lightbox continues to show the complete frame.
-if (!document.querySelector("link[data-gallery-editorial]")) {
-  const galleryStyles = document.createElement("link");
-  galleryStyles.rel = "stylesheet";
-  galleryStyles.href = "assets/css/gallery-editorial.css?v=2";
-  galleryStyles.dataset.galleryEditorial = "true";
-  document.head.appendChild(galleryStyles);
-}
-
 function closeMenu({ restoreFocus = false } = {}) {
   document.body.classList.remove("is-locked");
   mobileMenu?.classList.remove("is-open");
@@ -165,6 +115,7 @@ function updateCarousel() {
 }
 
 function moveCarousel(direction) {
+  if (!carouselSlides.length) return;
   carouselIndex = (carouselIndex + direction + carouselSlides.length) % carouselSlides.length;
   updateCarousel();
 }
@@ -204,15 +155,14 @@ carouselStage?.addEventListener("touchend", (event) => {
   if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.5) {
     suppressCarouselPhotoClick = true;
     moveCarousel(dx < 0 ? 1 : -1);
-    window.setTimeout(() => { suppressCarouselPhotoClick = false; }, 250);
+    window.setTimeout(() => { suppressCarouselPhotoClick = false; }, 450);
   }
 }, { passive: true });
 carouselStage?.addEventListener("touchcancel", () => { swipeStart = null; });
 
-// The hero video is decorative. Keep the iOS-safe muted inline playback attempt,
-// but do not expose a large play/pause control inside the primary CTA stack.
+// The hero video is decorative: try muted inline playback on supported devices,
+// respect reduced-motion preferences, and leave the poster as a graceful fallback.
 const heroVideo = document.querySelector(".hero-video");
-document.querySelector("[data-hero-video-toggle]")?.remove();
 const motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
 
 function syncHeroVideoWithMotionPreference() {
@@ -244,7 +194,7 @@ const lightboxClose = document.querySelector("[data-lightbox-close]");
 const lightboxPrev = document.querySelector("[data-lightbox-prev]");
 const lightboxNext = document.querySelector("[data-lightbox-next]");
 const galleryPhotos = Array.from(document.querySelectorAll(
-  ".gallery-carousel .carousel-slide img, .room-gallery img, .common-area-gallery img",
+  ".gallery-carousel .carousel-slide img, .room-gallery img, .common-area-gallery img, .palazzetto-still img",
 ));
 let lightboxPhotos = [];
 let lightboxIndex = 0;
@@ -280,13 +230,13 @@ function moveLightbox(direction) {
 
 function openLightbox(image) {
   if (!photoLightbox || !image) return;
-  const group = image.closest(".gallery-carousel, .room-gallery, .common-area-gallery");
+  const group = image.closest(".gallery-carousel, .room-gallery, .common-area-gallery, .palazzetto-still");
   lightboxPhotos = Array.from(group?.querySelectorAll("img") || [image]);
   lightboxIndex = Math.max(0, lightboxPhotos.indexOf(image));
   lightboxTrigger = image;
   updateLightbox();
   document.body.classList.add("is-locked");
-  photoLightbox.showModal();
+  if (!photoLightbox.open) photoLightbox.showModal();
   requestAnimationFrame(() => lightboxClose?.focus());
 }
 
