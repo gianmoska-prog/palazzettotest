@@ -292,6 +292,72 @@ document.addEventListener("keydown", (event) => {
 });
 labelGalleryPhotos();
 
+const reviewCopy = {
+  it: {
+    kicker: "Recensioni",
+    title: "Le esperienze degli ospiti, presto qui.",
+    status: "Recensioni in arrivo",
+    body: "Le recensioni verificate degli ospiti saranno raccolte qui non appena saranno disponibili sui profili ufficiali della struttura.",
+  },
+  en: {
+    kicker: "Reviews",
+    title: "Guest experiences, coming soon.",
+    status: "Reviews coming soon",
+    body: "Verified guest reviews will be collected here as soon as they are available on the property's official profiles.",
+  },
+  fr: {
+    kicker: "Avis",
+    title: "Les expériences de nos hôtes, bientôt ici.",
+    status: "Avis à venir",
+    body: "Les avis vérifiés de nos hôtes seront rassemblés ici dès qu'ils seront disponibles sur les profils officiels de l'établissement.",
+  },
+  es: {
+    kicker: "Reseñas",
+    title: "Experiencias de huéspedes, próximamente.",
+    status: "Reseñas próximamente",
+    body: "Las reseñas verificadas de los huéspedes se reunirán aquí en cuanto estén disponibles en los perfiles oficiales del alojamiento.",
+  },
+  de: {
+    kicker: "Bewertungen",
+    title: "Gästeerfahrungen, demnächst hier.",
+    status: "Bewertungen folgen",
+    body: "Verifizierte Gästebewertungen werden hier veröffentlicht, sobald sie auf den offiziellen Profilen der Unterkunft verfügbar sind.",
+  },
+};
+let reviewsSection = null;
+
+function syncReviewsSection() {
+  if (!reviewsSection) return;
+  const copy = reviewCopy[document.documentElement.lang] || reviewCopy.it;
+  const kicker = reviewsSection.querySelector("[data-review-kicker]");
+  const title = reviewsSection.querySelector("[data-review-title]");
+  const status = reviewsSection.querySelector("[data-review-status]");
+  const body = reviewsSection.querySelector("[data-review-body]");
+  if (kicker) kicker.textContent = copy.kicker;
+  if (title) title.textContent = copy.title;
+  if (status) status.textContent = copy.status;
+  if (body) body.textContent = copy.body;
+}
+
+function ensureReviewsSection() {
+  const dimoraContainer = document.querySelector("#dimora .content .container");
+  const dimoraCta = dimoraContainer?.querySelector(".cta-row");
+  if (!dimoraContainer || !dimoraCta || dimoraContainer.querySelector("[data-reviews-section]")) return;
+  const section = document.createElement("section");
+  section.className = "reviews-placeholder";
+  section.dataset.reviewsSection = "";
+  section.setAttribute("aria-labelledby", "reviews-title");
+  section.innerHTML = `
+    <div><p class="kicker" data-review-kicker></p><h3 id="reviews-title" data-review-title></h3></div>
+    <div><span class="status-pill" data-review-status></span><p data-review-body></p></div>
+  `;
+  dimoraCta.before(section);
+  reviewsSection = section;
+  syncReviewsSection();
+}
+
+ensureReviewsSection();
+
 const mapFrame = document.querySelector("[data-map-frame]");
 document.querySelector("[data-map-activate]")?.addEventListener("click", () => {
   if (!mapFrame || mapFrame.querySelector("iframe")) return;
@@ -335,5 +401,6 @@ window.addEventListener("palazzetto:language", () => {
     dot.setAttribute("aria-label", translated(`Vai all'immagine ${dot.dataset.i18nCarouselDot}`));
   });
   labelGalleryPhotos();
+  syncReviewsSection();
   if (photoLightbox?.open) updateLightbox();
 });
