@@ -1,406 +1,91 @@
-const header = document.querySelector("[data-header]");
-const menuToggle = document.querySelector("[data-menu-toggle]");
-const mobileMenu = document.querySelector("[data-mobile-menu]");
-const main = document.getElementById("main");
-const pages = Array.from(document.querySelectorAll("[data-page]"));
-const pageLinks = Array.from(document.querySelectorAll("[data-page-link]"));
-const translated = (text) => window.palazzettoI18n?.translate(text) || text;
+(() => {
+  "use strict";
 
-function closeMenu({ restoreFocus = false } = {}) {
-  document.body.classList.remove("is-locked");
-  mobileMenu?.classList.remove("is-open");
-  mobileMenu?.setAttribute("aria-hidden", "true");
-  if (mobileMenu) mobileMenu.inert = true;
-  header?.classList.remove("is-open");
-  menuToggle?.setAttribute("aria-expanded", "false");
-  menuToggle?.setAttribute("aria-label", translated("Apri menu"));
-  if (main) main.inert = false;
-  if (restoreFocus) menuToggle?.focus();
-}
+  const entranceCopy = {
+    it: {
+      kicker: "L'ingresso",
+      title: "Un ingresso raccolto, che introduce alla dimora.",
+      body: "La scala conduce agli ambienti della casa attraverso un passaggio intimo e luminoso, tra legno, volte chiare e dettagli essenziali.",
+      alt: "Ingresso e scala interna de Il Palazzetto Farnese",
+    },
+    en: {
+      kicker: "The entrance",
+      title: "An intimate entrance that introduces the house.",
+      body: "The staircase leads into the house through a quiet, light-filled passage of warm wood, pale vaults and restrained details.",
+      alt: "Entrance and internal staircase at Il Palazzetto Farnese",
+    },
+    fr: {
+      kicker: "L'entrée",
+      title: "Une entrée intime qui introduit la demeure.",
+      body: "L'escalier mène aux espaces de la maison par un passage calme et lumineux, entre bois chaleureux, voûtes claires et détails sobres.",
+      alt: "Entrée et escalier intérieur de Il Palazzetto Farnese",
+    },
+    es: {
+      kicker: "La entrada",
+      title: "Una entrada íntima que introduce a la casa.",
+      body: "La escalera conduce a los espacios de la casa a través de un paso tranquilo y luminoso, entre madera cálida, bóvedas claras y detalles discretos.",
+      alt: "Entrada y escalera interior de Il Palazzetto Farnese",
+    },
+    de: {
+      kicker: "Der Eingang",
+      title: "Ein zurückhaltender Eingang, der in das Haus führt.",
+      body: "Die Treppe führt durch einen ruhigen, hellen Übergang mit warmem Holz, hellen Gewölben und zurückhaltenden Details in die Räume des Hauses.",
+      alt: "Eingang und Innentreppe von Il Palazzetto Farnese",
+    },
+  };
 
-function openMenu() {
-  document.body.classList.add("is-locked");
-  mobileMenu?.classList.add("is-open");
-  mobileMenu?.setAttribute("aria-hidden", "false");
-  if (mobileMenu) mobileMenu.inert = false;
-  header?.classList.add("is-open");
-  menuToggle?.setAttribute("aria-expanded", "true");
-  menuToggle?.setAttribute("aria-label", translated("Chiudi menu"));
-  if (main) main.inert = true;
-  requestAnimationFrame(() => mobileMenu?.querySelector("a")?.focus());
-}
-
-function pageFromHash() {
-  const hash = location.hash.replace("#", "");
-  if (hash === "richiesta") return "contatti";
-  return pages.some((page) => page.dataset.page === hash) ? hash : "home";
-}
-
-function resetPageScroll() {
-  const root = document.documentElement;
-  const previousBehavior = root.style.scrollBehavior;
-  root.style.scrollBehavior = "auto";
-  window.scrollTo(0, 0);
-  document.body.scrollTop = 0;
-  root.scrollTop = 0;
-  root.style.scrollBehavior = previousBehavior;
-}
-
-function showPage(id, push = true, requestedHash = null) {
-  const next = pages.find((page) => page.dataset.page === id) || pages[0];
-  pages.forEach((page) => {
-    const active = page === next;
-    page.classList.toggle("is-active", active);
-    page.toggleAttribute("hidden", !active);
-  });
-  pageLinks.forEach((link) => {
-    const active = link.dataset.pageLink === next.dataset.page;
-    link.classList.toggle("is-active", active);
-    if (active) link.setAttribute("aria-current", "page");
-    else link.removeAttribute("aria-current");
-  });
-  closeMenu();
-  const destination = requestedHash || `#${next.dataset.page}`;
-  if (push) history.pushState({ page: next.dataset.page }, "", destination);
-  if (destination === "#richiesta") {
-    requestAnimationFrame(() => document.getElementById("richiesta")?.scrollIntoView());
-  } else {
-    resetPageScroll();
+  function currentEntranceCopy() {
+    const lang = (document.documentElement.lang || "it").slice(0, 2).toLowerCase();
+    return entranceCopy[lang] || entranceCopy.it;
   }
-  requestAnimationFrame(() => main?.focus({ preventScroll: true }));
-}
 
-pageLinks.forEach((link) => {
-  link.addEventListener("click", (event) => {
-    event.preventDefault();
-    const targetHash = link.getAttribute("href") || `#${link.dataset.pageLink}`;
-    showPage(link.dataset.pageLink, true, targetHash);
-  });
-});
-
-menuToggle?.addEventListener("click", () => {
-  if (menuToggle.getAttribute("aria-expanded") === "true") closeMenu({ restoreFocus: true });
-  else openMenu();
-});
-
-document.addEventListener("keydown", (event) => {
-  if (event.key === "Escape" && mobileMenu?.classList.contains("is-open")) closeMenu({ restoreFocus: true });
-});
-
-function setHeaderState() {
-  header?.classList.toggle("is-scrolled", window.scrollY > 18);
-}
-
-window.addEventListener("scroll", setHeaderState, { passive: true });
-window.addEventListener("popstate", () => showPage(pageFromHash(), false, location.hash));
-
-const carouselTrack = document.querySelector("[data-carousel-track]");
-const carouselSlides = Array.from(document.querySelectorAll(".carousel-slide"));
-const carouselPrev = document.querySelector("[data-carousel-prev]");
-const carouselNext = document.querySelector("[data-carousel-next]");
-const carouselCount = document.querySelector("[data-carousel-count]");
-const carouselDots = document.querySelector("[data-carousel-dots]");
-let carouselIndex = 0;
-
-function updateCarousel() {
-  if (!carouselTrack || !carouselSlides.length) return;
-  carouselTrack.style.transform = `translateX(-${carouselIndex * 100}%)`;
-  if (carouselCount) carouselCount.textContent = `${String(carouselIndex + 1).padStart(2, "0")} / ${String(carouselSlides.length).padStart(2, "0")}`;
-  carouselSlides.forEach((slide, index) => slide.classList.toggle("is-active", index === carouselIndex));
-  carouselDots?.querySelectorAll(".carousel-dot").forEach((dot, index) => {
-    const active = index === carouselIndex;
-    dot.classList.toggle("is-active", active);
-    dot.setAttribute("aria-current", active ? "true" : "false");
-  });
-}
-
-function moveCarousel(direction) {
-  if (!carouselSlides.length) return;
-  carouselIndex = (carouselIndex + direction + carouselSlides.length) % carouselSlides.length;
-  updateCarousel();
-}
-
-carouselSlides.forEach((_, index) => {
-  const dot = document.createElement("button");
-  dot.type = "button";
-  dot.className = "carousel-dot";
-  dot.dataset.i18nCarouselDot = String(index + 1);
-  dot.setAttribute("aria-label", translated(`Vai all'immagine ${index + 1}`));
-  dot.addEventListener("click", () => {
-    carouselIndex = index;
-    updateCarousel();
-  });
-  carouselDots?.appendChild(dot);
-});
-carouselPrev?.addEventListener("click", () => moveCarousel(-1));
-carouselNext?.addEventListener("click", () => moveCarousel(1));
-document.querySelector("[data-carousel]")?.addEventListener("keydown", (event) => {
-  if (event.key === "ArrowLeft") moveCarousel(-1);
-  if (event.key === "ArrowRight") moveCarousel(1);
-});
-updateCarousel();
-
-// A horizontal swipe advances photos; vertical scrolling remains native.
-const carouselStage = document.querySelector(".carousel-stage");
-let swipeStart = null;
-let suppressCarouselPhotoClick = false;
-carouselStage?.addEventListener("touchstart", (event) => {
-  swipeStart = event.touches.length === 1 ? { x: event.touches[0].clientX, y: event.touches[0].clientY } : null;
-}, { passive: true });
-carouselStage?.addEventListener("touchend", (event) => {
-  if (!swipeStart || !event.changedTouches.length) return;
-  const dx = event.changedTouches[0].clientX - swipeStart.x;
-  const dy = event.changedTouches[0].clientY - swipeStart.y;
-  swipeStart = null;
-  if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.5) {
-    suppressCarouselPhotoClick = true;
-    moveCarousel(dx < 0 ? 1 : -1);
-    window.setTimeout(() => { suppressCarouselPhotoClick = false; }, 450);
-  }
-}, { passive: true });
-carouselStage?.addEventListener("touchcancel", () => { swipeStart = null; });
-
-// The hero video is decorative: try muted inline playback on supported devices,
-// respect reduced-motion preferences, and leave the poster as a graceful fallback.
-const heroVideo = document.querySelector(".hero-video");
-const motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
-
-function syncHeroVideoWithMotionPreference() {
-  if (!heroVideo) return;
-  if (motionPreference.matches) {
-    heroVideo.pause();
-    return;
-  }
-  heroVideo.muted = true;
-  const playAttempt = heroVideo.play();
-  playAttempt?.catch?.(() => {
-    // Safari may refuse autoplay in some circumstances. The poster remains a
-    // deliberate fallback, so the page never depends on playback to compose.
-  });
-}
-
-if (typeof motionPreference.addEventListener === "function") {
-  motionPreference.addEventListener("change", syncHeroVideoWithMotionPreference);
-} else {
-  motionPreference.addListener?.(syncHeroVideoWithMotionPreference);
-}
-syncHeroVideoWithMotionPreference();
-
-const photoLightbox = document.querySelector("[data-photo-lightbox]");
-const lightboxImage = document.querySelector("[data-lightbox-image]");
-const lightboxCaption = document.querySelector("[data-lightbox-caption]");
-const lightboxClose = document.querySelector("[data-lightbox-close]");
-const lightboxPrev = document.querySelector("[data-lightbox-prev]");
-const lightboxNext = document.querySelector("[data-lightbox-next]");
-const galleryPhotos = Array.from(document.querySelectorAll(
-  ".gallery-carousel .carousel-slide img, .room-gallery img, .common-area-gallery img, .palazzetto-still img, .context-gallery img",
-));
-let lightboxPhotos = [];
-let lightboxIndex = 0;
-let lightboxTrigger = null;
-let lightboxSwipeStart = null;
-
-function photoCaption(image) {
-  const visibleCaption = image.closest("figure")?.querySelector("figcaption")?.textContent?.trim();
-  return visibleCaption || image.alt || "";
-}
-
-function labelGalleryPhotos() {
-  galleryPhotos.forEach((image) => {
-    image.tabIndex = 0;
-    image.setAttribute("role", "button");
-    image.setAttribute("aria-label", `${photoCaption(image)}. ${translated("Apri fotografia a schermo intero")}`);
-  });
-}
-
-function updateLightbox() {
-  const image = lightboxPhotos[lightboxIndex];
-  if (!image || !lightboxImage || !lightboxCaption) return;
-  lightboxImage.src = image.dataset.fullSrc || image.currentSrc || image.src;
-  lightboxImage.alt = image.alt;
-  lightboxCaption.textContent = photoCaption(image);
-  [lightboxPrev, lightboxNext].forEach((button) => {
-    if (!button) return;
-    button.hidden = lightboxPhotos.length < 2;
-    button.disabled = lightboxPhotos.length < 2;
-  });
-}
-
-function moveLightbox(direction) {
-  if (lightboxPhotos.length < 2) return;
-  lightboxIndex = (lightboxIndex + direction + lightboxPhotos.length) % lightboxPhotos.length;
-  updateLightbox();
-}
-
-function openLightbox(image) {
-  if (!photoLightbox || !image) return;
-  const group = image.closest(".gallery-carousel, .room-gallery, .common-area-gallery, .palazzetto-still, .context-gallery");
-  lightboxPhotos = Array.from(group?.querySelectorAll("img") || [image]);
-  lightboxIndex = Math.max(0, lightboxPhotos.indexOf(image));
-  lightboxTrigger = image;
-  updateLightbox();
-  document.body.classList.add("is-locked");
-  if (!photoLightbox.open) photoLightbox.showModal();
-  requestAnimationFrame(() => lightboxClose?.focus());
-}
-
-function closeLightbox() {
-  if (!photoLightbox?.open) return;
-  photoLightbox.close();
-}
-
-galleryPhotos.forEach((image) => {
-  image.addEventListener("click", () => {
-    if (suppressCarouselPhotoClick && image.closest(".gallery-carousel")) return;
-    openLightbox(image);
-  });
-  image.addEventListener("keydown", (event) => {
-    if (event.key === "Enter" || event.key === " ") {
-      event.preventDefault();
-      openLightbox(image);
+  function patchEntranceFeature() {
+    const copy = currentEntranceCopy();
+    const dimoraHero = document.querySelector("#dimora .page-hero");
+    const dimoraHeroPhoto = dimoraHero?.querySelector(".page-hero__photo");
+    if (dimoraHero && dimoraHeroPhoto) {
+      dimoraHero.classList.add("page-hero--lane");
+      dimoraHeroPhoto.src = "assets/img/real/14-view-to-lane.webp";
+      dimoraHeroPhoto.alt = "";
+      dimoraHeroPhoto.removeAttribute("srcset");
     }
-  });
-});
-lightboxClose?.addEventListener("click", closeLightbox);
-lightboxPrev?.addEventListener("click", () => moveLightbox(-1));
-lightboxNext?.addEventListener("click", () => moveLightbox(1));
-photoLightbox?.addEventListener("click", (event) => {
-  if (event.target === photoLightbox) closeLightbox();
-});
-photoLightbox?.addEventListener("touchstart", (event) => {
-  lightboxSwipeStart = event.touches.length === 1 ? { x: event.touches[0].clientX, y: event.touches[0].clientY } : null;
-}, { passive: true });
-photoLightbox?.addEventListener("touchend", (event) => {
-  if (!lightboxSwipeStart || !event.changedTouches.length) return;
-  const dx = event.changedTouches[0].clientX - lightboxSwipeStart.x;
-  const dy = event.changedTouches[0].clientY - lightboxSwipeStart.y;
-  lightboxSwipeStart = null;
-  if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.25) moveLightbox(dx < 0 ? 1 : -1);
-}, { passive: true });
-photoLightbox?.addEventListener("touchcancel", () => { lightboxSwipeStart = null; });
-photoLightbox?.addEventListener("close", () => {
-  document.body.classList.remove("is-locked");
-  lightboxImage?.removeAttribute("src");
-  lightboxTrigger?.focus();
-  lightboxTrigger = null;
-  lightboxSwipeStart = null;
-});
-document.addEventListener("keydown", (event) => {
-  if (!photoLightbox?.open) return;
-  if (event.key === "ArrowLeft") moveLightbox(-1);
-  if (event.key === "ArrowRight") moveLightbox(1);
-});
-labelGalleryPhotos();
 
-const reviewCopy = {
-  it: {
-    kicker: "Recensioni",
-    title: "Le esperienze degli ospiti, presto qui.",
-    status: "Recensioni in arrivo",
-    body: "Le recensioni verificate degli ospiti saranno raccolte qui non appena saranno disponibili sui profili ufficiali della struttura.",
-  },
-  en: {
-    kicker: "Reviews",
-    title: "Guest experiences, coming soon.",
-    status: "Reviews coming soon",
-    body: "Verified guest reviews will be collected here as soon as they are available on the property's official profiles.",
-  },
-  fr: {
-    kicker: "Avis",
-    title: "Les expériences de nos hôtes, bientôt ici.",
-    status: "Avis à venir",
-    body: "Les avis vérifiés de nos hôtes seront rassemblés ici dès qu'ils seront disponibles sur les profils officiels de l'établissement.",
-  },
-  es: {
-    kicker: "Reseñas",
-    title: "Experiencias de huéspedes, próximamente.",
-    status: "Reseñas próximamente",
-    body: "Las reseñas verificadas de los huéspedes se reunirán aquí en cuanto estén disponibles en los perfiles oficiales del alojamiento.",
-  },
-  de: {
-    kicker: "Bewertungen",
-    title: "Gästeerfahrungen, demnächst hier.",
-    status: "Bewertungen folgen",
-    body: "Verifizierte Gästebewertungen werden hier veröffentlicht, sobald sie auf den offiziellen Profilen der Unterkunft verfügbar sind.",
-  },
-};
-let reviewsSection = null;
+    const feature = document.querySelector("#dimora .agri-feature");
+    const featureText = feature?.querySelector(".agri-feature__text");
+    const featurePhoto = feature?.querySelector(".palazzetto-still img");
+    if (!feature || !featureText || !featurePhoto) return;
 
-function syncReviewsSection() {
-  if (!reviewsSection) return;
-  const copy = reviewCopy[document.documentElement.lang] || reviewCopy.it;
-  const kicker = reviewsSection.querySelector("[data-review-kicker]");
-  const title = reviewsSection.querySelector("[data-review-title]");
-  const status = reviewsSection.querySelector("[data-review-status]");
-  const body = reviewsSection.querySelector("[data-review-body]");
-  if (kicker) kicker.textContent = copy.kicker;
-  if (title) title.textContent = copy.title;
-  if (status) status.textContent = copy.status;
-  if (body) body.textContent = copy.body;
-}
+    feature.classList.add("agri-feature--entrance");
+    featurePhoto.src = "assets/img/real/18-entrance-staircase-client.webp";
+    featurePhoto.alt = copy.alt;
+    featurePhoto.width = 600;
+    featurePhoto.height = 900;
+    featurePhoto.loading = "lazy";
+    featurePhoto.decoding = "async";
 
-function ensureReviewsSection() {
-  const dimoraContainer = document.querySelector("#dimora .content .container");
-  const dimoraCta = dimoraContainer?.querySelector(".cta-row");
-  if (!dimoraContainer || !dimoraCta || dimoraContainer.querySelector("[data-reviews-section]")) return;
-  const section = document.createElement("section");
-  section.className = "reviews-placeholder";
-  section.dataset.reviewsSection = "";
-  section.setAttribute("aria-labelledby", "reviews-title");
-  section.innerHTML = `
-    <div><p class="kicker" data-review-kicker></p><h3 id="reviews-title" data-review-title></h3></div>
-    <div><span class="status-pill" data-review-status></span><p data-review-body></p></div>
-  `;
-  dimoraCta.before(section);
-  reviewsSection = section;
-  syncReviewsSection();
-}
+    const kicker = featureText.querySelector(".kicker");
+    const title = featureText.querySelector("h3");
+    const body = featureText.querySelector("h3 + p");
+    if (kicker) kicker.textContent = copy.kicker;
+    if (title) title.textContent = copy.title;
+    if (body) body.textContent = copy.body;
 
-ensureReviewsSection();
+    featureText.querySelector(".button")?.remove();
+  }
 
-const mapFrame = document.querySelector("[data-map-frame]");
-document.querySelector("[data-map-activate]")?.addEventListener("click", () => {
-  if (!mapFrame || mapFrame.querySelector("iframe")) return;
-  const iframe = document.createElement("iframe");
-  iframe.title = translated("Mappa de Il Palazzetto Farnese");
-  iframe.loading = "lazy";
-  iframe.referrerPolicy = "no-referrer-when-downgrade";
-  iframe.src = mapFrame.dataset.mapSrc;
-  iframe.setAttribute("allowfullscreen", "");
-  mapFrame.replaceChildren(iframe);
-});
+  if (!document.querySelector('link[data-entrance-feature-style]')) {
+    const stylesheet = document.createElement("link");
+    stylesheet.rel = "stylesheet";
+    stylesheet.href = "assets/css/entrance-feature.css?v=1";
+    stylesheet.dataset.entranceFeatureStyle = "";
+    document.head.appendChild(stylesheet);
+  }
 
-const enquiryForm = document.querySelector("[data-enquiry-form]");
-const formStatus = document.querySelector("[data-form-status]");
-enquiryForm?.addEventListener("submit", (event) => {
-  event.preventDefault();
-  if (!enquiryForm.reportValidity()) return;
-  const data = new FormData(enquiryForm);
-  const subject = translated("Richiesta disponibilità - Il Palazzetto Farnese");
-  const body = [
-    `${translated("Nome")}: ${data.get("name") || ""}`,
-    `E-mail: ${data.get("email") || ""}`,
-    `${translated("Telefono")}: ${data.get("phone") || ""}`,
-    `${translated("Tipo di soggiorno")}: ${translated(data.get("type") || "")}`,
-    `${translated("Data o periodo")}: ${data.get("date") || ""}`,
-    `${translated("Numero di ospiti")}: ${data.get("guests") || ""}`,
-    "",
-    `${translated("Messaggio")}: ${data.get("message") || ""}`,
-  ].join("\n");
-  if (formStatus) formStatus.textContent = translated("Apertura del programma e-mail…");
-  location.href = `mailto:ilpalazzettofarnese@outlook.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-});
+  patchEntranceFeature();
+  window.addEventListener("palazzetto:language", patchEntranceFeature);
 
-pages.forEach((page) => page.toggleAttribute("hidden", !page.classList.contains("is-active")));
-showPage(pageFromHash(), false, location.hash || "#home");
-setHeaderState();
-
-window.addEventListener("palazzetto:language", () => {
-  menuToggle?.setAttribute("aria-label", translated(menuToggle.getAttribute("aria-expanded") === "true" ? "Chiudi menu" : "Apri menu"));
-  document.querySelectorAll("[data-i18n-carousel-dot]").forEach((dot) => {
-    dot.setAttribute("aria-label", translated(`Vai all'immagine ${dot.dataset.i18nCarouselDot}`));
-  });
-  labelGalleryPhotos();
-  syncReviewsSection();
-  if (photoLightbox?.open) updateLightbox();
-});
+  const core = document.createElement("script");
+  core.src = "assets/js/site-core.js?v=palazzetto-9";
+  core.async = false;
+  document.head.appendChild(core);
+})();

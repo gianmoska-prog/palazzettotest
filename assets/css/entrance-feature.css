@@ -1,0 +1,121 @@
+/* Focused entrance-feature treatment.
+   The client-selected portrait photograph is intentionally shown in full. */
+
+.agri-feature--entrance {
+  grid-template-columns: minmax(320px, 0.95fr) minmax(300px, 0.68fr);
+  gap: clamp(22px, 3vw, 40px);
+  align-items: stretch;
+}
+
+.agri-feature--entrance .agri-feature__text {
+  position: relative;
+  padding: clamp(36px, 4vw, 56px);
+  overflow: hidden;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.52), rgba(244, 240, 232, 0.92));
+}
+
+.agri-feature--entrance .agri-feature__text::before {
+  content: "";
+  width: 54px;
+  height: 1px;
+  margin-bottom: 24px;
+  background: rgba(155, 101, 80, 0.68);
+}
+
+.agri-feature--entrance .agri-feature__text .kicker {
+  margin: 0 0 20px;
+}
+
+.agri-feature--entrance .agri-feature__text h3 {
+  max-width: 13ch;
+  font-size: clamp(2.15rem, 3.2vw, 3.4rem);
+}
+
+.agri-feature--entrance .agri-feature__text h3 + p {
+  max-width: 35ch;
+  margin: 22px 0 0;
+  font-family: var(--serif);
+  font-size: clamp(1.02rem, 1.25vw, 1.18rem);
+  line-height: 1.7;
+}
+
+.agri-feature--entrance .palazzetto-still {
+  min-height: 0;
+  aspect-ratio: auto;
+  display: grid;
+  place-items: center;
+  padding: clamp(14px, 2vw, 24px);
+  overflow: hidden;
+  background: #e2d7c8;
+  box-shadow: 0 28px 70px rgba(23, 32, 42, 0.11);
+}
+
+.agri-feature--entrance .palazzetto-still img {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 680px;
+  padding: 0;
+  object-fit: contain;
+  object-position: center;
+  transform: none;
+  filter: none;
+}
+
+.page-hero--lane .page-hero__photo {
+  object-position: center 50%;
+}
+
+@media (max-width: 1100px) {
+  .agri-feature--entrance {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+
+  .agri-feature--entrance .palazzetto-still img {
+    max-height: 720px;
+  }
+}
+
+@media (max-width: 760px) {
+  .agri-feature--entrance {
+    margin-top: 42px;
+    gap: 16px;
+  }
+
+  .agri-feature--entrance .agri-feature__text {
+    padding: 28px 24px 30px;
+  }
+
+  .agri-feature--entrance .agri-feature__text::before {
+    margin-bottom: 18px;
+  }
+
+  .agri-feature--entrance .agri-feature__text h3 {
+    max-width: 14ch;
+    font-size: clamp(2rem, 9vw, 2.8rem);
+  }
+
+  .agri-feature--entrance .agri-feature__text h3 + p {
+    font-size: 1rem;
+    line-height: 1.65;
+  }
+
+  .agri-feature--entrance .palazzetto-still {
+    padding: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .agri-feature--entrance .palazzetto-still img {
+    width: 100%;
+    max-width: 100%;
+    max-height: none;
+  }
+
+  .page-hero--lane .page-hero__photo {
+    object-position: center 50%;
+  }
+}
