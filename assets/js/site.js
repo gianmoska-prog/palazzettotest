@@ -56,10 +56,10 @@
     if (!feature || !featureText || !featurePhoto) return;
 
     feature.classList.add("agri-feature--entrance");
-    featurePhoto.src = "assets/img/real/18-entrance-staircase-client.webp";
+    featurePhoto.src = "assets/img/real/12-entrance-staircase.webp";
     featurePhoto.alt = copy.alt;
-    featurePhoto.width = 600;
-    featurePhoto.height = 900;
+    featurePhoto.width = 1024;
+    featurePhoto.height = 1536;
     featurePhoto.loading = "lazy";
     featurePhoto.decoding = "async";
 
