@@ -286,6 +286,21 @@
     ["Via S. Egidio 2, Caprarola.", "Via S. Egidio 2, Caprarola.", "Via S. Egidio 2, Caprarola.", "Via S. Egidio 2, Caprarola.", "Via S. Egidio 2, Caprarola."],
     ["La mappa indica l'ingresso della guest house; i percorsi dai parcheggi sono disponibili nella sezione Servizi.", "The map marks the guest-house entrance; routes from the car parks are available in the Amenities section.", "La carte indique l'entrée de la maison d'hôtes ; les itinéraires depuis les parkings sont disponibles dans la section Services.", "El mapa indica la entrada de la casa; las rutas desde los aparcamientos están en la sección Servicios.", "Die Karte zeigt den Eingang des Gästehauses; die Wege von den Parkplätzen finden Sie unter Ausstattung."],
     ["Apri in Google Maps", "Open in Google Maps", "Ouvrir dans Google Maps", "Abrir en Google Maps", "In Google Maps öffnen"],
+    ["Gli spazi della dimora.","The spaces of the guest house.","Les espaces de la maison d’hôtes.","Los espacios de la casa de huéspedes.","Die Räume des Gästehauses."],
+    ["Uno sguardo agli ambienti condivisi della guest house.","A look inside the guest house’s shared spaces.","Un aperçu des espaces communs de la maison d’hôtes.","Una mirada a los espacios compartidos de la casa de huéspedes.","Ein Einblick in die Gemeinschaftsräume des Gästehauses."],
+    ["Il Palazzo e il territorio","The palace and its surroundings","Le palais et ses environs","El palacio y su entorno","Der Palast und seine Umgebung"],
+    ["Palazzo Farnese, a pochi passi","Palazzo Farnese, just steps away","Palazzo Farnese, à quelques pas","Palazzo Farnese, a pocos pasos","Palazzo Farnese, nur wenige Schritte entfernt"],
+    ["Una selezione di vedute di Palazzo Farnese, dei suoi giardini e dei suoi interni storici: il patrimonio culturale vicino alla guest house.","Views of Palazzo Farnese, its gardens and historic interiors: the cultural heritage close to the guest house.","Des vues de Palazzo Farnese, de ses jardins et de ses intérieurs historiques : le patrimoine culturel à proximité de la maison d’hôtes.","Vistas de Palazzo Farnese, sus jardines e interiores históricos: el patrimonio cultural cercano a la casa de huéspedes.","Ansichten von Palazzo Farnese, seinen Gärten und historischen Innenräumen: das kulturelle Erbe in der Nähe des Gästehauses."],
+    ["Galleria di Palazzo Farnese e Caprarola","Gallery of Palazzo Farnese and Caprarola","Galerie de Palazzo Farnese et de Caprarola","Galería de Palazzo Farnese y Caprarola","Galerie von Palazzo Farnese und Caprarola"],
+    ["Il Palazzo dai giardini","The palace from the gardens","Le palais depuis les jardins","El palacio desde los jardines","Der Palast von den Gärten aus"],
+    ["Fontana nei giardini di Palazzo Farnese","Fountain in the gardens of Palazzo Farnese","Fontaine dans les jardins de Palazzo Farnese","Fuente en los jardines de Palazzo Farnese","Brunnen in den Gärten von Palazzo Farnese"],
+    ["Architetture dei giardini di Palazzo Farnese","Garden architecture at Palazzo Farnese","Architecture des jardins de Palazzo Farnese","Arquitectura de los jardines de Palazzo Farnese","Gartenarchitektur von Palazzo Farnese"],
+    ["Sala del Mappamondo · Palazzo Farnese","Sala del Mappamondo · Palazzo Farnese","Sala del Mappamondo · Palazzo Farnese","Sala del Mappamondo · Palazzo Farnese","Sala del Mappamondo · Palazzo Farnese"],
+    ["La volta di Palazzo Farnese","The vaulted ceiling of Palazzo Farnese","La voûte de Palazzo Farnese","La bóveda de Palazzo Farnese","Das Gewölbe von Palazzo Farnese"],
+    ["La scala di Palazzo Farnese","The staircase of Palazzo Farnese","L’escalier de Palazzo Farnese","La escalera de Palazzo Farnese","Die Treppe von Palazzo Farnese"],
+    ["Palazzo Farnese e il borgo","Palazzo Farnese and the village","Palazzo Farnese et le village","Palazzo Farnese y el pueblo","Palazzo Farnese und der Ort"],
+    ["Caprarola dall'alto","Caprarola from above","Caprarola vue du ciel","Caprarola desde el aire","Caprarola von oben"],
+    ["Panorama di Caprarola e Palazzo Farnese","Panorama of Caprarola and Palazzo Farnese","Panorama de Caprarola et de Palazzo Farnese","Panorama de Caprarola y Palazzo Farnese","Panorama von Caprarola und Palazzo Farnese"],
   ];
 
   const keys = ["en", "fr", "es", "de"];

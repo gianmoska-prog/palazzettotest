@@ -74,7 +74,8 @@
   pointer-events: none;
 }
 
-.carousel-slide::after {
+.carousel-slide::after,
+.context-gallery figure::after {
   content: "+";
   position: absolute;
   z-index: 3;
@@ -93,6 +94,7 @@
   pointer-events: none;
 }
 
+.context-gallery img:focus-visible,
 .palazzetto-still img:focus-visible,
 .carousel-slide img:focus-visible,
 .room-gallery img:focus-visible,
@@ -162,6 +164,62 @@
   object-position: center;
   transform: none;
   filter: none;
+}
+
+/* A secondary cultural gallery, separate from the accommodation photographs. */
+.context-section {
+  margin-top: clamp(56px, 7vw, 90px);
+  padding-top: 36px;
+  border-top: 1px solid rgba(73, 55, 42, 0.18);
+}
+.context-section .agri-gallery-head { margin-top: 0; }
+.context-gallery {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 26px 18px;
+}
+.context-gallery figure { position: relative; margin: 0; min-width: 0; }
+.context-gallery img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  object-position: center;
+  background: #d9cbb9;
+  cursor: zoom-in;
+}
+.context-gallery figcaption {
+  margin-top: 9px;
+  font-family: var(--serif);
+  font-size: 1rem;
+  line-height: 1.3;
+  color: var(--muted);
+}
+
+/* Actual supplied line art: transparent, non-interactive room-copy watermark. */
+.room-showcase__copy { position: relative; isolation: isolate; }
+.room-showcase__copy::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--room-mark) center / contain no-repeat;
+  opacity: 0.10;
+  pointer-events: none;
+}
+#mappamondo .room-showcase__copy { --room-mark: url("../img/palazzo/room-mark-mappamondo.png"); }
+#belvedere .room-showcase__copy { --room-mark: url("../img/palazzo/room-mark-belvedere.png"); }
+.page-hero-inner .banner-context {
+  margin-top: 16px;
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+}
+@media (max-width: 600px) {
+  .context-gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 12px; }
+  .context-gallery figcaption { font-size: 0.9rem; }
+  .context-gallery figure::after { top: 8px; right: 8px; width: 28px; height: 28px; }
 }
 
 @media (max-width: 760px) {

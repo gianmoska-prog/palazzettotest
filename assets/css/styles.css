@@ -4640,9 +4640,6 @@ body {
 }
 
 /* v35: real-photography integration and responsive editorial crops */
-.home {
-  background-image: url("../img/real/13-historic-lane.webp");
-}
 
 .page[data-page="dimora"] .page-hero {
   --banner-position: center 58%;

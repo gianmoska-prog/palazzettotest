@@ -193,7 +193,7 @@ const lightboxClose = document.querySelector("[data-lightbox-close]");
 const lightboxPrev = document.querySelector("[data-lightbox-prev]");
 const lightboxNext = document.querySelector("[data-lightbox-next]");
 const galleryPhotos = Array.from(document.querySelectorAll(
-  ".gallery-carousel .carousel-slide img, .room-gallery img, .common-area-gallery img, .palazzetto-still img",
+  ".gallery-carousel .carousel-slide img, .room-gallery img, .common-area-gallery img, .palazzetto-still img, .context-gallery img",
 ));
 let lightboxPhotos = [];
 let lightboxIndex = 0;
@@ -216,7 +216,7 @@ function labelGalleryPhotos() {
 function updateLightbox() {
   const image = lightboxPhotos[lightboxIndex];
   if (!image || !lightboxImage || !lightboxCaption) return;
-  lightboxImage.src = image.currentSrc || image.src;
+  lightboxImage.src = image.dataset.fullSrc || image.currentSrc || image.src;
   lightboxImage.alt = image.alt;
   lightboxCaption.textContent = photoCaption(image);
   [lightboxPrev, lightboxNext].forEach((button) => {
@@ -234,7 +234,7 @@ function moveLightbox(direction) {
 
 function openLightbox(image) {
   if (!photoLightbox || !image) return;
-  const group = image.closest(".gallery-carousel, .room-gallery, .common-area-gallery, .palazzetto-still");
+  const group = image.closest(".gallery-carousel, .room-gallery, .common-area-gallery, .palazzetto-still, .context-gallery");
   lightboxPhotos = Array.from(group?.querySelectorAll("img") || [image]);
   lightboxIndex = Math.max(0, lightboxPhotos.indexOf(image));
   lightboxTrigger = image;
