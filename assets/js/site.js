@@ -6,6 +6,17 @@ const pages = Array.from(document.querySelectorAll("[data-page]"));
 const pageLinks = Array.from(document.querySelectorAll("[data-page-link]"));
 const translated = (text) => window.palazzettoI18n?.translate(text) || text;
 
+// Patch 2 keeps gallery presentation isolated from the legacy stylesheet until
+// the final cleanup pass. Loading it after styles.css lets the page use concise
+// editorial crops while the lightbox continues to show the complete frame.
+if (!document.querySelector("link[data-gallery-editorial]")) {
+  const galleryStyles = document.createElement("link");
+  galleryStyles.rel = "stylesheet";
+  galleryStyles.href = "assets/css/gallery-editorial.css?v=1";
+  galleryStyles.dataset.galleryEditorial = "true";
+  document.head.appendChild(galleryStyles);
+}
+
 function closeMenu({ restoreFocus = false } = {}) {
   document.body.classList.remove("is-locked");
   mobileMenu?.classList.remove("is-open");
@@ -142,6 +153,7 @@ updateCarousel();
 // A horizontal swipe advances photos; vertical scrolling remains native.
 const carouselStage = document.querySelector(".carousel-stage");
 let swipeStart = null;
+let suppressCarouselPhotoClick = false;
 carouselStage?.addEventListener("touchstart", (event) => {
   swipeStart = event.touches.length === 1 ? { x: event.touches[0].clientX, y: event.touches[0].clientY } : null;
 }, { passive: true });
@@ -150,7 +162,11 @@ carouselStage?.addEventListener("touchend", (event) => {
   const dx = event.changedTouches[0].clientX - swipeStart.x;
   const dy = event.changedTouches[0].clientY - swipeStart.y;
   swipeStart = null;
-  if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.5) moveCarousel(dx < 0 ? 1 : -1);
+  if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.5) {
+    suppressCarouselPhotoClick = true;
+    moveCarousel(dx < 0 ? 1 : -1);
+    window.setTimeout(() => { suppressCarouselPhotoClick = false; }, 250);
+  }
 }, { passive: true });
 carouselStage?.addEventListener("touchcancel", () => { swipeStart = null; });
 
@@ -188,16 +204,24 @@ const lightboxCaption = document.querySelector("[data-lightbox-caption]");
 const lightboxClose = document.querySelector("[data-lightbox-close]");
 const lightboxPrev = document.querySelector("[data-lightbox-prev]");
 const lightboxNext = document.querySelector("[data-lightbox-next]");
-const roomPhotos = Array.from(document.querySelectorAll(".room-gallery img, .common-area-gallery img"));
+const galleryPhotos = Array.from(document.querySelectorAll(
+  ".gallery-carousel .carousel-slide img, .room-gallery img, .common-area-gallery img",
+));
 let lightboxPhotos = [];
 let lightboxIndex = 0;
 let lightboxTrigger = null;
+let lightboxSwipeStart = null;
 
-function labelRoomPhotos() {
-  roomPhotos.forEach((image) => {
+function photoCaption(image) {
+  const visibleCaption = image.closest("figure")?.querySelector("figcaption")?.textContent?.trim();
+  return visibleCaption || image.alt || "";
+}
+
+function labelGalleryPhotos() {
+  galleryPhotos.forEach((image) => {
     image.tabIndex = 0;
     image.setAttribute("role", "button");
-    image.setAttribute("aria-label", `${image.alt}. ${translated("Apri fotografia a schermo intero")}`);
+    image.setAttribute("aria-label", `${photoCaption(image)}. ${translated("Apri fotografia a schermo intero")}`);
   });
 }
 
@@ -206,7 +230,7 @@ function updateLightbox() {
   if (!image || !lightboxImage || !lightboxCaption) return;
   lightboxImage.src = image.currentSrc || image.src;
   lightboxImage.alt = image.alt;
-  lightboxCaption.textContent = image.alt;
+  lightboxCaption.textContent = photoCaption(image);
 }
 
 function moveLightbox(direction) {
@@ -217,7 +241,8 @@ function moveLightbox(direction) {
 
 function openLightbox(image) {
   if (!photoLightbox || !image) return;
-  lightboxPhotos = Array.from(image.closest(".room-gallery, .common-area-gallery")?.querySelectorAll("img") || []);
+  const group = image.closest(".gallery-carousel, .room-gallery, .common-area-gallery");
+  lightboxPhotos = Array.from(group?.querySelectorAll("img") || [image]);
   lightboxIndex = Math.max(0, lightboxPhotos.indexOf(image));
   lightboxTrigger = image;
   updateLightbox();
@@ -231,8 +256,11 @@ function closeLightbox() {
   photoLightbox.close();
 }
 
-roomPhotos.forEach((image) => {
-  image.addEventListener("click", () => openLightbox(image));
+galleryPhotos.forEach((image) => {
+  image.addEventListener("click", () => {
+    if (suppressCarouselPhotoClick && image.closest(".gallery-carousel")) return;
+    openLightbox(image);
+  });
   image.addEventListener("keydown", (event) => {
     if (event.key === "Enter" || event.key === " ") {
       event.preventDefault();
@@ -246,18 +274,30 @@ lightboxNext?.addEventListener("click", () => moveLightbox(1));
 photoLightbox?.addEventListener("click", (event) => {
   if (event.target === photoLightbox) closeLightbox();
 });
+photoLightbox?.addEventListener("touchstart", (event) => {
+  lightboxSwipeStart = event.touches.length === 1 ? { x: event.touches[0].clientX, y: event.touches[0].clientY } : null;
+}, { passive: true });
+photoLightbox?.addEventListener("touchend", (event) => {
+  if (!lightboxSwipeStart || !event.changedTouches.length) return;
+  const dx = event.changedTouches[0].clientX - lightboxSwipeStart.x;
+  const dy = event.changedTouches[0].clientY - lightboxSwipeStart.y;
+  lightboxSwipeStart = null;
+  if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.25) moveLightbox(dx < 0 ? 1 : -1);
+}, { passive: true });
+photoLightbox?.addEventListener("touchcancel", () => { lightboxSwipeStart = null; });
 photoLightbox?.addEventListener("close", () => {
   document.body.classList.remove("is-locked");
   lightboxImage?.removeAttribute("src");
   lightboxTrigger?.focus();
   lightboxTrigger = null;
+  lightboxSwipeStart = null;
 });
 document.addEventListener("keydown", (event) => {
   if (!photoLightbox?.open) return;
   if (event.key === "ArrowLeft") moveLightbox(-1);
   if (event.key === "ArrowRight") moveLightbox(1);
 });
-labelRoomPhotos();
+labelGalleryPhotos();
 
 const mapFrame = document.querySelector("[data-map-frame]");
 document.querySelector("[data-map-activate]")?.addEventListener("click", () => {
@@ -301,5 +341,5 @@ window.addEventListener("palazzetto:language", () => {
   document.querySelectorAll("[data-i18n-carousel-dot]").forEach((dot) => {
     dot.setAttribute("aria-label", translated(`Vai all'immagine ${dot.dataset.i18nCarouselDot}`));
   });
-  labelRoomPhotos();
+  labelGalleryPhotos();
 });
