@@ -1,0 +1,185 @@
+/* Patch 2 — editorial gallery presentation.
+   The page uses deliberate crops for composition; the existing lightbox keeps
+   the complete source frame available on demand. This file is loaded after the
+   legacy stylesheet so it can safely neutralise the earlier blanket
+   object-fit: contain override without disturbing unrelated components. */
+
+.carousel-stage {
+  background: #2c302f;
+}
+
+.carousel-slide {
+  position: relative;
+  display: block;
+  aspect-ratio: 16 / 9;
+  grid-template-rows: none;
+  overflow: hidden;
+  background: #2c302f;
+}
+
+.carousel-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  padding: 0;
+  object-fit: cover !important;
+  object-position: var(--photo-position, center) !important;
+  transform: none !important;
+  filter: none !important;
+  cursor: zoom-in;
+}
+
+.carousel-slide--stairs img {
+  --photo-position: center 47%;
+}
+
+.carousel-slide figcaption {
+  position: absolute;
+  z-index: 2;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 42px 28px 24px;
+  color: #fff8eb;
+  background: linear-gradient(180deg, rgba(20, 17, 15, 0), rgba(20, 17, 15, 0.78));
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.34);
+  font-family: var(--serif);
+  font-size: clamp(1.2rem, 1.9vw, 1.8rem);
+  line-height: 1.2;
+  pointer-events: none;
+}
+
+.carousel-slide::after {
+  content: "+";
+  position: absolute;
+  z-index: 3;
+  top: 14px;
+  right: 14px;
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  color: #2d211b;
+  background: rgba(255, 248, 235, 0.92);
+  border: 1px solid rgba(73, 55, 42, 0.18);
+  border-radius: 50%;
+  font: 400 1.2rem/1 var(--sans);
+  box-shadow: 0 6px 22px rgba(24, 17, 13, 0.18);
+  pointer-events: none;
+}
+
+.carousel-slide img:focus-visible,
+.room-gallery img:focus-visible,
+.common-area-gallery img:focus-visible {
+  outline: 3px solid rgba(176, 138, 88, 0.96);
+  outline-offset: -4px;
+}
+
+.room-gallery figure,
+.common-area-gallery figure {
+  position: relative;
+  margin: 0;
+  min-width: 0;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: #d9cbb9;
+}
+
+.room-gallery .room-gallery__main,
+.common-area-gallery .common-area-gallery__main {
+  aspect-ratio: 16 / 10 !important;
+}
+
+.room-gallery img,
+.common-area-gallery img {
+  display: block;
+  width: 100%;
+  height: 100% !important;
+  padding: 0;
+  object-fit: cover !important;
+  object-position: var(--photo-position, center) !important;
+  transform: none !important;
+  filter: none !important;
+  cursor: zoom-in;
+}
+
+.room-gallery__main img {
+  --photo-position: center 52%;
+}
+
+.room-gallery__sign img {
+  --photo-position: 35% 42%;
+}
+
+#belvedere .room-gallery__sign img {
+  --photo-position: 32% 41%;
+}
+
+.common-area-gallery figure:nth-child(2) img {
+  --photo-position: center 55%;
+}
+
+.common-area-gallery figure:nth-child(3) img {
+  --photo-position: center 54%;
+}
+
+.common-area-gallery figure:nth-child(4) img {
+  --photo-position: center 53%;
+}
+
+/* Keep the full source frame in the viewer, regardless of the editorial crop
+   used by the page itself. */
+.photo-lightbox__figure img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain !important;
+  object-position: center !important;
+  transform: none !important;
+  filter: none !important;
+}
+
+@media (max-width: 760px) {
+  .carousel-slide {
+    aspect-ratio: 4 / 5;
+  }
+
+  .carousel-slide--stairs img {
+    --photo-position: center 45%;
+  }
+
+  .carousel-slide figcaption {
+    padding: 38px 18px 17px;
+    font-size: 1.15rem;
+  }
+
+  .carousel-slide::after {
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+  }
+
+  .room-gallery .room-gallery__main,
+  .common-area-gallery .common-area-gallery__main {
+    aspect-ratio: 4 / 3 !important;
+  }
+
+  .room-gallery figure:not(.room-gallery__main),
+  .common-area-gallery figure:not(.common-area-gallery__main) {
+    aspect-ratio: 1 / 1;
+  }
+
+  .room-gallery .room-gallery__sign,
+  .common-area-gallery figure:nth-child(4) {
+    aspect-ratio: 16 / 10;
+  }
+
+  .room-gallery__sign img {
+    --photo-position: 31% 37%;
+  }
+
+  #belvedere .room-gallery__sign img {
+    --photo-position: 28% 38%;
+  }
+}
