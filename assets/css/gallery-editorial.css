@@ -1,12 +1,6 @@
-/* Patch 2 — editorial gallery presentation.
-   The page uses deliberate crops for composition; the existing lightbox keeps
-   the complete source frame available on demand. This file is loaded after the
-   legacy stylesheet so it can safely neutralise the earlier blanket
-   object-fit: contain override without disturbing unrelated components. */
-
-/* Patch 3 — photographic curation.
-   The live Dimora selection avoids the client-flagged staircase sources until
-   they receive a proper retouch, while preserving them untouched in the repo. */
+/* Authoritative photography presentation: editorial inline crops and focal
+   points, with complete source photographs in the shared dialog viewer.
+   Layout, controls and legacy non-gallery components remain in styles.css. */
 
 .palazzetto-still {
   position: relative;
@@ -19,14 +13,20 @@
 .palazzetto-still img {
   display: block;
   width: 100%;
-  height: 100% !important;
+  height: 100%;
   max-height: none;
   padding: 0;
-  object-fit: cover !important;
-  object-position: center 52% !important;
-  transform: none !important;
-  filter: none !important;
+  object-fit: cover;
+  object-position: center 52%;
+  transform: none;
+  filter: none;
+  cursor: zoom-in;
 }
+
+.palazzetto-still::before,
+.palazzetto-still::after { display: none; }
+
+.photo-lightbox__nav[hidden] { display: none; }
 
 .carousel-stage {
   background: #2c302f;
@@ -47,10 +47,10 @@
   height: 100%;
   min-height: 0;
   padding: 0;
-  object-fit: cover !important;
-  object-position: var(--photo-position, center) !important;
-  transform: none !important;
-  filter: none !important;
+  object-fit: cover;
+  object-position: var(--photo-position, center);
+  transform: none;
+  filter: none;
   cursor: zoom-in;
 }
 
@@ -93,6 +93,7 @@
   pointer-events: none;
 }
 
+.palazzetto-still img:focus-visible,
 .carousel-slide img:focus-visible,
 .room-gallery img:focus-visible,
 .common-area-gallery img:focus-visible {
@@ -112,19 +113,19 @@
 
 .room-gallery .room-gallery__main,
 .common-area-gallery .common-area-gallery__main {
-  aspect-ratio: 16 / 10 !important;
+  aspect-ratio: 16 / 10;
 }
 
 .room-gallery img,
 .common-area-gallery img {
   display: block;
   width: 100%;
-  height: 100% !important;
+  height: 100%;
   padding: 0;
-  object-fit: cover !important;
-  object-position: var(--photo-position, center) !important;
-  transform: none !important;
-  filter: none !important;
+  object-fit: cover;
+  object-position: var(--photo-position, center);
+  transform: none;
+  filter: none;
   cursor: zoom-in;
 }
 
@@ -157,10 +158,10 @@
 .photo-lightbox__figure img {
   width: 100%;
   height: 100%;
-  object-fit: contain !important;
-  object-position: center !important;
-  transform: none !important;
-  filter: none !important;
+  object-fit: contain;
+  object-position: center;
+  transform: none;
+  filter: none;
 }
 
 @media (max-width: 760px) {
@@ -169,7 +170,7 @@
   }
 
   .palazzetto-still img {
-    object-position: center 50% !important;
+    object-position: center 50%;
   }
 
   .carousel-slide {
@@ -194,7 +195,7 @@
 
   .room-gallery .room-gallery__main,
   .common-area-gallery .common-area-gallery__main {
-    aspect-ratio: 4 / 3 !important;
+    aspect-ratio: 4 / 3;
   }
 
   .room-gallery figure:not(.room-gallery__main),

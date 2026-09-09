@@ -167,7 +167,6 @@ const motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
 
 function syncHeroVideoWithMotionPreference() {
   if (!heroVideo) return;
-  heroVideo.classList.remove("is-user-playing");
   if (motionPreference.matches) {
     heroVideo.pause();
     return;
@@ -220,10 +219,15 @@ function updateLightbox() {
   lightboxImage.src = image.currentSrc || image.src;
   lightboxImage.alt = image.alt;
   lightboxCaption.textContent = photoCaption(image);
+  [lightboxPrev, lightboxNext].forEach((button) => {
+    if (!button) return;
+    button.hidden = lightboxPhotos.length < 2;
+    button.disabled = lightboxPhotos.length < 2;
+  });
 }
 
 function moveLightbox(direction) {
-  if (!lightboxPhotos.length) return;
+  if (lightboxPhotos.length < 2) return;
   lightboxIndex = (lightboxIndex + direction + lightboxPhotos.length) % lightboxPhotos.length;
   updateLightbox();
 }
@@ -331,4 +335,5 @@ window.addEventListener("palazzetto:language", () => {
     dot.setAttribute("aria-label", translated(`Vai all'immagine ${dot.dataset.i18nCarouselDot}`));
   });
   labelGalleryPhotos();
+  if (photoLightbox?.open) updateLightbox();
 });
