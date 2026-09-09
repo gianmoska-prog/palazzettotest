@@ -4,6 +4,30 @@
    legacy stylesheet so it can safely neutralise the earlier blanket
    object-fit: contain override without disturbing unrelated components. */
 
+/* Patch 3 — photographic curation.
+   The live Dimora selection avoids the client-flagged staircase sources until
+   they receive a proper retouch, while preserving them untouched in the repo. */
+
+.palazzetto-still {
+  position: relative;
+  min-height: 0;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: #d9cbb9;
+}
+
+.palazzetto-still img {
+  display: block;
+  width: 100%;
+  height: 100% !important;
+  max-height: none;
+  padding: 0;
+  object-fit: cover !important;
+  object-position: center 52% !important;
+  transform: none !important;
+  filter: none !important;
+}
+
 .carousel-stage {
   background: #2c302f;
 }
@@ -30,8 +54,8 @@
   cursor: zoom-in;
 }
 
-.carousel-slide--stairs img {
-  --photo-position: center 47%;
+.carousel-slide--lane img {
+  --photo-position: center 50%;
 }
 
 .carousel-slide figcaption {
@@ -140,12 +164,20 @@
 }
 
 @media (max-width: 760px) {
+  .palazzetto-still {
+    aspect-ratio: 4 / 3;
+  }
+
+  .palazzetto-still img {
+    object-position: center 50% !important;
+  }
+
   .carousel-slide {
     aspect-ratio: 4 / 5;
   }
 
-  .carousel-slide--stairs img {
-    --photo-position: center 45%;
+  .carousel-slide--lane img {
+    --photo-position: center 50%;
   }
 
   .carousel-slide figcaption {
