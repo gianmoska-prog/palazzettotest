@@ -296,6 +296,7 @@
     ["Fontana nei giardini di Palazzo Farnese","Fountain in the gardens of Palazzo Farnese","Fontaine dans les jardins de Palazzo Farnese","Fuente en los jardines de Palazzo Farnese","Brunnen in den Gärten von Palazzo Farnese"],
     ["Architetture dei giardini di Palazzo Farnese","Garden architecture at Palazzo Farnese","Architecture des jardins de Palazzo Farnese","Arquitectura de los jardines de Palazzo Farnese","Gartenarchitektur von Palazzo Farnese"],
     ["Sala del Mappamondo · Palazzo Farnese","Sala del Mappamondo · Palazzo Farnese","Sala del Mappamondo · Palazzo Farnese","Sala del Mappamondo · Palazzo Farnese","Sala del Mappamondo · Palazzo Farnese"],
+    ["La zona pranzo tra piante e dettagli","The dining area, plants and details","L’espace repas, entre plantes et détails","La zona de comedor, entre plantas y detalles","Der Essbereich mit Pflanzen und Details"],
     ["Stanza del Mappamondo, Palazzo Farnese","Stanza del Mappamondo, Palazzo Farnese","Stanza del Mappamondo, Palazzo Farnese","Stanza del Mappamondo, Palazzo Farnese","Stanza del Mappamondo, Palazzo Farnese"],
     ["Scala Regia, Palazzo Farnese","Scala Regia, Palazzo Farnese","Scala Regia, Palazzo Farnese","Scala Regia, Palazzo Farnese","Scala Regia, Palazzo Farnese"],
     ["Palazzo Farnese e il borgo","Palazzo Farnese and the village","Palazzo Farnese et le village","Palazzo Farnese y el pueblo","Palazzo Farnese und der Ort"],
