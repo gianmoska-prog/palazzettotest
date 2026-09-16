@@ -34,8 +34,35 @@
     },
   };
 
+  const serviceNoticeCopy = {
+    it: {
+      title: "Colazione e pasti, secondo i tuoi ritmi.",
+      body: "La cucina comune è attrezzata con tutto il necessario per preparare in autonomia colazione e pasti; la colazione non viene servita dalla struttura.",
+    },
+    en: {
+      title: "Breakfast and meals, at your own pace.",
+      body: "The shared kitchen has everything needed to prepare breakfast and meals independently; breakfast is not served by the property.",
+    },
+    fr: {
+      title: "Petit-déjeuner et repas, à votre rythme.",
+      body: "La cuisine commune offre tout le nécessaire pour préparer petit-déjeuner et repas en autonomie ; le petit-déjeuner n'est pas servi par l'établissement.",
+    },
+    es: {
+      title: "Desayuno y comidas, a tu ritmo.",
+      body: "La cocina común cuenta con todo lo necesario para preparar el desayuno y las comidas de forma autónoma; el alojamiento no sirve desayuno.",
+    },
+    de: {
+      title: "Frühstück und Mahlzeiten, in Ihrem Rhythmus.",
+      body: "Die Gemeinschaftsküche bietet alles für die selbstständige Zubereitung von Frühstück und Mahlzeiten; ein Frühstücksservice wird nicht angeboten.",
+    },
+  };
+
+  function currentLanguage() {
+    return (document.documentElement.lang || "it").slice(0, 2).toLowerCase();
+  }
+
   function currentEntranceCopy() {
-    const lang = (document.documentElement.lang || "it").slice(0, 2).toLowerCase();
+    const lang = currentLanguage();
     return entranceCopy[lang] || entranceCopy.it;
   }
 
@@ -73,6 +100,16 @@
     featureText.querySelector(".button")?.remove();
   }
 
+  function patchServiceNotice() {
+    const notice = document.querySelector("#servizi .service-notice");
+    if (!notice) return;
+    const copy = serviceNoticeCopy[currentLanguage()] || serviceNoticeCopy.it;
+    const title = notice.querySelector("strong");
+    const body = notice.querySelector("p");
+    if (title) title.textContent = copy.title;
+    if (body) body.textContent = copy.body;
+  }
+
   if (!document.querySelector('link[data-entrance-feature-style]')) {
     const stylesheet = document.createElement("link");
     stylesheet.rel = "stylesheet";
@@ -81,8 +118,20 @@
     document.head.appendChild(stylesheet);
   }
 
+  if (!document.querySelector('link[data-client-final-style]')) {
+    const stylesheet = document.createElement("link");
+    stylesheet.rel = "stylesheet";
+    stylesheet.href = "assets/css/client-final.css?v=20260916-1";
+    stylesheet.dataset.clientFinalStyle = "";
+    document.head.appendChild(stylesheet);
+  }
+
   patchEntranceFeature();
-  window.addEventListener("palazzetto:language", patchEntranceFeature);
+  patchServiceNotice();
+  window.addEventListener("palazzetto:language", () => {
+    patchEntranceFeature();
+    patchServiceNotice();
+  });
 
   const core = document.createElement("script");
   core.src = "assets/js/site-core.js?v=palazzetto-9";
