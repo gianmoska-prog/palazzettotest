@@ -1,0 +1,108 @@
+/* Final client-polish overrides — 16 September 2026.
+   Intentionally narrow in scope: appliance preview crop, room-fact transparency,
+   and a Safari-safe full-frame photo viewer. */
+
+/* The appliance photograph is a landscape source shown inside editorial crops.
+   Keep the useful counter/appliance area in frame and reduce the empty wall. */
+.gallery-carousel .carousel-slide:nth-child(4) img {
+  --photo-position: center 70%;
+}
+.common-area-gallery figure:nth-child(4) img {
+  --photo-position: center 68%;
+}
+
+/* Let the supplied room emblems remain visible beneath the facts without
+   sacrificing text contrast. */
+.room-showcase .room-facts div {
+  background: rgba(244, 234, 220, 0.56);
+}
+
+/* Robust full-frame viewer. Avoid percentage-height/grid behaviour that can
+   collapse portrait photographs to a tiny intrinsic rendering in Safari. */
+.photo-lightbox[open] {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100dvh;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: clamp(58px, 6vw, 82px) clamp(62px, 8vw, 112px) clamp(34px, 4vw, 56px);
+  overflow: hidden;
+}
+
+.photo-lightbox__figure {
+  width: min(100%, 1320px);
+  height: auto;
+  max-height: calc(100dvh - 112px);
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.photo-lightbox__figure img,
+.photo-lightbox__figure img[data-lightbox-image] {
+  display: block;
+  flex: 0 1 auto;
+  width: auto;
+  height: auto;
+  min-width: 0;
+  min-height: 0;
+  max-width: 100%;
+  max-height: calc(100dvh - 158px);
+  object-fit: contain;
+  object-position: center;
+}
+
+.photo-lightbox__nav {
+  position: absolute;
+  z-index: 3;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.photo-lightbox__nav--prev {
+  left: clamp(12px, 2.5vw, 34px);
+}
+.photo-lightbox__nav--next {
+  right: clamp(12px, 2.5vw, 34px);
+}
+
+@media (max-width: 760px) {
+  .gallery-carousel .carousel-slide:nth-child(4) img {
+    --photo-position: center 74%;
+  }
+
+  .room-showcase .room-facts div {
+    background: rgba(244, 234, 220, 0.52);
+  }
+
+  .photo-lightbox[open] {
+    display: flex;
+    padding: 56px 12px 22px;
+  }
+
+  .photo-lightbox__figure {
+    width: 100%;
+    max-height: calc(100dvh - 78px);
+    gap: 10px;
+  }
+
+  .photo-lightbox__figure img,
+  .photo-lightbox__figure img[data-lightbox-image] {
+    max-width: 100%;
+    max-height: calc(100dvh - 122px);
+  }
+
+  .photo-lightbox__nav--prev {
+    left: 8px;
+  }
+  .photo-lightbox__nav--next {
+    right: 8px;
+  }
+}
