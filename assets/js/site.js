@@ -121,7 +121,7 @@
   if (!document.querySelector('link[data-client-final-style]')) {
     const stylesheet = document.createElement("link");
     stylesheet.rel = "stylesheet";
-    stylesheet.href = "assets/css/client-final.css?v=20260916-1";
+    stylesheet.href = "assets/css/client-final.css?v=20260918-1";
     stylesheet.dataset.clientFinalStyle = "";
     document.head.appendChild(stylesheet);
   }

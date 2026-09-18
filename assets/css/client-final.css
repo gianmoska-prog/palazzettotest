@@ -74,8 +74,11 @@
 }
 
 @media (max-width: 760px) {
-  .gallery-carousel .carousel-slide:nth-child(4) img {
-    --photo-position: center 74%;
+  /* Only this landscape photo is letterboxed in the mobile Dimora carousel. */
+  .gallery-carousel .carousel-slide img[src$="17-kitchen-appliances.webp"] {
+    object-fit: contain;
+    object-position: center;
+    background: #000;
   }
 
   .room-showcase .room-facts div {
