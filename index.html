@@ -32,6 +32,7 @@
     <link rel="preload" as="font" href="assets/fonts/cormorant-garamond-latin.woff2" type="font/woff2" crossorigin />
     <link rel="stylesheet" href="assets/css/styles.css?v=palazzetto-31" />
     <link rel="stylesheet" href="assets/css/gallery-editorial.css?v=palazzetto-5" />
+    <link rel="stylesheet" href="assets/css/tour.css?v=1" />
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -173,6 +174,15 @@
               </div>
               <div class="video-frame agri-video-frame palazzetto-still"><img src="assets/img/real/14-view-to-lane.webp" alt="Il borgo fuori dalla porta" loading="lazy" decoding="async" width="1536" height="1024" /></div>
             </div>
+            <section class="tour-section" aria-label="Video: Il Palazzetto Farnese">
+              <div class="tour-teaser" data-tour-teaser>
+                <video class="tour-teaser__video" data-tour-preview muted loop playsinline preload="none" poster="assets/img/palazzetto-tour-poster.jpg" aria-hidden="true"></video>
+                <button class="tour-teaser__action" type="button" data-tour-open aria-label="Conosci il Palazzetto: guarda il video">
+                  <span class="tour-teaser__play" aria-hidden="true">▶</span>
+                  <span>CONOSCI IL PALAZZETTO</span>
+                </button>
+              </div>
+            </section>
             <div class="agri-gallery-head">
               <div><p class="kicker">Galleria</p><h3>Gli spazi della dimora.</h3></div>
               <p>Uno sguardo agli ambienti condivisi della guest house.</p>
@@ -403,6 +413,11 @@
       <button class="photo-lightbox__nav photo-lightbox__nav--next" type="button" data-lightbox-next aria-label="Fotografia successiva">›</button>
     </dialog>
 
+    <dialog class="tour-dialog" data-tour-dialog aria-label="Video: Il Palazzetto Farnese">
+      <button class="tour-dialog__close" type="button" data-tour-close aria-label="Chiudi video">×</button>
+      <video class="tour-dialog__video" data-tour-video controls playsinline preload="none" poster="assets/img/palazzetto-tour-poster.jpg"></video>
+    </dialog>
+
     <footer class="footer-minimal">
       <div class="footer-minimal__inner">
         <div class="footer-wordmark"><strong>Il Palazzetto Farnese</strong><span>Caprarola (VT)</span></div>
@@ -410,7 +425,8 @@
         <div class="footer-links"><a href="privacy.html">Privacy</a><a href="cookie.html">Cookie</a><a href="mailto:ilpalazzettofarnese@outlook.com">E-mail</a></div>
       </div>
     </footer>
-    <script src="assets/js/i18n.js?v=palazzetto-12"></script>
+    <script src="assets/js/i18n.js?v=palazzetto-13"></script>
     <script src="assets/js/site.js?v=palazzetto-10"></script>
+    <script src="assets/js/tour.js?v=1"></script>
   </body>
 </html>
