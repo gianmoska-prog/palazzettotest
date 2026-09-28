@@ -108,6 +108,18 @@
   background: #000;
 }
 
+.tour-dialog__fallback {
+  position: absolute;
+  bottom: max(18px, env(safe-area-inset-bottom));
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: calc(100% - 32px);
+  color: #fff8eb;
+  font: 500 14px/1.4 system-ui, sans-serif;
+  text-align: center;
+  text-underline-offset: 4px;
+}
+
 .tour-dialog__close {
   position: absolute;
   z-index: 2;

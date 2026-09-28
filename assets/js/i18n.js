@@ -18,6 +18,7 @@
     ["Conosci il Palazzetto: guarda il video", "Discover the Palazzetto: watch the film", "Découvrir le Palazzetto : voir la vidéo", "Conoce el Palazzetto: ver el vídeo", "Das Palazzetto kennenlernen: Film ansehen"],
     ["CONOSCI IL PALAZZETTO", "DISCOVER THE PALAZZETTO", "DÉCOUVRIR LE PALAZZETTO", "CONOCE EL PALAZZETTO", "DAS PALAZZETTO ENTDECKEN"],
     ["Chiudi video", "Close video", "Fermer la vidéo", "Cerrar vídeo", "Video schließen"],
+    ["Apri il video nel lettore del telefono", "Open the film in your phone's player", "Ouvrir la vidéo dans le lecteur du téléphone", "Abrir el vídeo en el reproductor del teléfono", "Video im Player des Telefons öffnen"],
     ["Le camere", "Rooms", "Les chambres", "Las habitaciones", "Zimmer"],
     ["Servizi", "Amenities", "Services", "Servicios", "Ausstattung"],
     ["Contatti", "Contact", "Contact", "Contacto", "Kontakt"],
