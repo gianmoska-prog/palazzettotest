@@ -10,7 +10,7 @@
   if (!teaser || !preview || !openButton || !dialog || !fullVideo || !closeButton) return;
 
   const previewUrl = "assets/video/palazzetto-preview.mp4";
-  const filmUrl = "assets/video/palazzetto-tour.mp4";
+  const filmUrl = "assets/video/palazzetto-tour.mp4?v=2";
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   let teaserVisible = false;
 
