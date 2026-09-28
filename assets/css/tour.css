@@ -26,8 +26,8 @@
   height: 100%;
   object-fit: cover;
   object-position: center;
-  filter: blur(2px) saturate(.82);
-  transform: scale(1.025);
+  filter: blur(12px) saturate(.82);
+  transform: scale(1.08);
   pointer-events: none;
 }
 
