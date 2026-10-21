@@ -1,6 +1,6 @@
 # Stefano C photography integration
 
-All nine supplied photographs appear in the secondary Palazzo Farnese cultural gallery on La dimora, after the guest-house carousel and before the room CTA. They are explicitly described as Palazzo/territorial context, not accommodation interiors. The existing lightbox is reused; inline cover crops and full-frame contain remain unchanged.
+All nine supplied photographs appear in the secondary Palazzo Farnese cultural gallery on La dimora, after the property carousel and before the room CTA. They are explicitly described as Palazzo/territorial context, not accommodation interiors. The existing lightbox is reused; inline cover crops and full-frame contain remain unchanged.
 
 ## Added image files
 
