@@ -11,8 +11,8 @@
   if (!teaser || !preview || !openButton || !dialog || !fullVideo || !closeButton || !fallback) return;
 
   const previewUrl = "assets/video/palazzetto-preview.mp4";
-  const filmUrl = "assets/video/palazzetto-tour.mp4?v=tourism-20261107";
-  const mobileFilmUrl = "assets/video/palazzetto-tour-mobile.mp4?v=tourism-20261107";
+  const filmUrl = "assets/video/palazzetto-tour.mp4?v=spaced-20261108";
+  const mobileFilmUrl = "assets/video/palazzetto-tour-mobile.mp4?v=spaced-20261108";
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   let teaserVisible = false;
   let fallbackTimer;
