@@ -388,7 +388,7 @@ enquiryForm?.addEventListener("submit", (event) => {
     `${translated("Messaggio")}: ${data.get("message") || ""}`,
   ].join("\n");
   if (formStatus) formStatus.textContent = translated("Apertura del programma e-mail…");
-  location.href = `mailto:ilpalazzettofarnese@outlook.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  location.href = `mailto:ilpalazzettofarnese@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 });
 
 pages.forEach((page) => page.toggleAttribute("hidden", !page.classList.contains("is-active")));

@@ -134,7 +134,7 @@
   });
 
   const core = document.createElement("script");
-  core.src = "assets/js/site-core.js?v=palazzetto-9";
+  core.src = "assets/js/site-core.js?v=email-20261120";
   core.async = false;
   document.head.appendChild(core);
 })();
